@@ -51,13 +51,13 @@ export default function App() {
     setTerminalInput('');
   };
 
-  // OTP Backend Handlers (Connecting to Spring Boot running on localhost:8080)
+  // OTP Backend Handlers (Connecting to Spring Boot on Render)
   const handleSendOtp = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
     try {
-      const res = awaitfetch("https://portfolio-backend-qeoj.onrender.com/send-otp", {
+      const res = await fetch("https://portfolio-backend-qeoj.onrender.com/api/send-otp", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: formData.name, email: formData.email })
@@ -69,7 +69,7 @@ export default function App() {
         setMessage('Error sending OTP. Make sure Spring Boot backend is running.');
       }
     } catch (err) {
-      setMessage('Backend offline. Please start Spring Boot on port 8081.');
+      setMessage('Backend offline or unreachable.');
     }
     setLoading(false);
   };
@@ -79,7 +79,7 @@ export default function App() {
     setLoading(true);
     setMessage('');
     try {
-      const res = await fetch("https://portfolio-backend-qeoj.onrender.com/send-otp", {
+      const res = await fetch("https://portfolio-backend-qeoj.onrender.com/api/verify-otp", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: formData.email, otp: formData.otp })
@@ -102,7 +102,7 @@ export default function App() {
     setLoading(true);
     setMessage('');
     try {
-      const res = await fetch("https://portfolio-backend-qeoj.onrender.com/send-otp", {
+      const res = await fetch("https://portfolio-backend-qeoj.onrender.com/api/submit-answers", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
