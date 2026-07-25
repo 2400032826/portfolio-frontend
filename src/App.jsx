@@ -17,8 +17,8 @@ export default function App() {
     { type: 'output', text: "Venkat's terminal v1.0 — type 'help' to begin." }
   ]);
 
-  // Contact / OTP Form State
-  const [step, setStep] = useState(1); // 1: Info, 2: OTP, 3: Questions, 4: Done
+  // Contact Form State — set step to 3 by default to skip OTP
+  const [step, setStep] = useState(3); // 3: Direct Contact Form, 4: Success Message
   const [formData, setFormData] = useState({ name: '', email: '', otp: '', q1: '', q2: '' });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -51,76 +51,37 @@ export default function App() {
     setTerminalInput('');
   };
 
-  // OTP Backend Handlers (Connecting to Spring Boot on Render)
-  const handleSendOtp = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage('');
-    try {
-      const res = await fetch("https://portfolio-backend-qeoj.onrender.com/api/send-otp", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: formData.name, email: formData.email })
-      });
-      if (res.ok) {
-        setStep(2);
-        setMessage('OTP sent to your email from harikasina50@gmail.com!');
-      } else {
-        setMessage('Error sending OTP. Make sure Spring Boot backend is running.');
-      }
-    } catch (err) {
-      setMessage('Backend offline or unreachable.');
-    }
-    setLoading(false);
-  };
-
-  const handleVerifyOtp = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage('');
-    try {
-      const res = await fetch("https://portfolio-backend-qeoj.onrender.com/api/verify-otp", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: formData.email, otp: formData.otp })
-      });
-      const isCorrect = await res.json();
-      if (isCorrect) {
-        setStep(3);
-        setMessage('OTP Verified successfully! Please answer the questions below.');
-      } else {
-        setMessage('Invalid OTP code. Please check your email.');
-      }
-    } catch (err) {
-      setMessage('Verification connection failed.');
-    }
-    setLoading(false);
-  };
-
+  // Formspree Contact Form Submission
   const handleSubmitFinal = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage('');
+    setMessage("");
+
     try {
-      const res = await fetch("https://portfolio-backend-qeoj.onrender.com/api/submit-answers", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("https://formspree.io/f/mkodpvnn", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          answerOne: formData.q1,
-          answerTwo: formData.q2
+          subject: formData.q1,
+          message: formData.q2
         })
       });
-      if (res.ok) {
+
+      if (response.ok) {
         setStep(4);
-        setMessage('Responses recorded and no-reply confirmation email sent!');
+        setMessage("Message sent successfully!");
       } else {
-        setMessage('Failed to record response.');
+        setMessage("Failed to send message.");
       }
-    } catch (err) {
-      setMessage('Submission connection failed.');
+    } catch (error) {
+      setMessage("Something went wrong.");
     }
+
     setLoading(false);
   };
 
@@ -334,7 +295,7 @@ export default function App() {
             <div className="bg-slate-900/40 border border-slate-800/80 p-6 rounded-2xl relative">
               <span className="text-xs font-mono text-cyan-400">Secondary Education</span>
               <h3 className="text-xl font-bold mt-1 text-white">Blessed Alphonsa Convent High School</h3>
-              <p className="text-slate-400 text-sm">Raichur District</p>
+              <p className="text-slate-400 text-sm">Guntur District</p>
             </div>
           </div>
 
@@ -459,7 +420,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 05 - CONTACT & OTP VERIFICATION SECTION */}
+      {/* 05 - CONTACT SECTION (DIRECT FORMSPREE FORM) */}
       <section id="contact" className="py-16 px-6 max-w-6xl mx-auto">
         <div className="text-xs font-mono text-cyan-400 mb-2">05 — Contact</div>
         <h2 className="text-3xl font-bold mb-2">Let's build something together</h2>
@@ -488,7 +449,7 @@ export default function App() {
               <div className="p-3 bg-cyan-500/10 text-cyan-400 rounded-xl"><MapPin size={20} /></div>
               <div>
                 <div className="text-xs text-slate-400">LOCATION</div>
-                <div className="font-medium text-white">Raichur, Karnataka, India</div>
+                <div className="font-medium text-white">Vijayawada , Andhra Pradesh, India</div>
               </div>
             </div>
 
@@ -501,7 +462,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* Right OTP Verification & Contact Form */}
+          {/* Right Formspree Contact Form */}
           <div className="bg-slate-900/60 border border-slate-800/80 p-8 rounded-2xl backdrop-blur-sm relative">
             {message && (
               <div className="mb-6 p-3 bg-slate-800 border border-cyan-500/40 text-cyan-400 text-sm rounded-xl">
@@ -509,9 +470,9 @@ export default function App() {
               </div>
             )}
 
-            {/* STEP 1: Enter Name and Email */}
-            {step === 1 && (
-              <form onSubmit={handleSendOtp} className="space-y-4">
+            {/* DIRECT FORMSPREE CONTACT FORM */}
+            {step === 3 && (
+              <form onSubmit={handleSubmitFinal} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-1 text-slate-300">Name</label>
                   <input
@@ -523,6 +484,7 @@ export default function App() {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium mb-1 text-slate-300">Email</label>
                   <input
@@ -534,48 +496,7 @@ export default function App() {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
                 </div>
-                <button
-                  disabled={loading}
-                  type="submit"
-                  className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold py-3 rounded-xl transition flex items-center justify-center space-x-2"
-                >
-                  <Send size={16} />
-                  <span>{loading ? 'Sending OTP...' : 'Send OTP Verification'}</span>
-                </button>
-              </form>
-            )}
 
-            {/* STEP 2: Verify OTP */}
-            {step === 2 && (
-              <form onSubmit={handleVerifyOtp} className="space-y-4">
-                <div className="text-xs text-slate-400 mb-2">
-                  An OTP has been sent from <span className="text-cyan-400">harikasina50@gmail.com</span> to <span className="text-white">{formData.email}</span>.
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1 text-slate-300">Enter 6-Digit OTP Code</label>
-                  <input
-                    required
-                    type="text"
-                    maxLength="6"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-center text-2xl font-mono text-cyan-400 tracking-widest focus:outline-none focus:border-cyan-400"
-                    placeholder="123456"
-                    value={formData.otp}
-                    onChange={(e) => setFormData({ ...formData, otp: e.target.value })}
-                  />
-                </div>
-                <button
-                  disabled={loading}
-                  type="submit"
-                  className="w-full bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-bold py-3 rounded-xl transition"
-                >
-                  {loading ? 'Verifying...' : 'Verify OTP'}
-                </button>
-              </form>
-            )}
-
-            {/* STEP 3: Answer Questions */}
-            {step === 3 && (
-              <form onSubmit={handleSubmitFinal} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-1 text-slate-300">Subject / Project Topic</label>
                   <input
@@ -587,6 +508,7 @@ export default function App() {
                     onChange={(e) => setFormData({ ...formData, q1: e.target.value })}
                   />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium mb-1 text-slate-300">Message / Details</label>
                   <textarea
@@ -598,12 +520,14 @@ export default function App() {
                     onChange={(e) => setFormData({ ...formData, q2: e.target.value })}
                   />
                 </div>
+
                 <button
                   disabled={loading}
                   type="submit"
-                  className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold py-3 rounded-xl transition"
+                  className="w-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold py-3 rounded-xl transition flex items-center justify-center space-x-2"
                 >
-                  {loading ? 'Submitting...' : 'Send Message'}
+                  <Send size={16} />
+                  <span>{loading ? 'Submitting...' : 'Send Message'}</span>
                 </button>
               </form>
             )}
@@ -614,7 +538,7 @@ export default function App() {
                 <CheckCircle2 className="mx-auto text-emerald-400 w-16 h-16 mb-4" />
                 <h3 className="text-2xl font-bold text-white mb-2">Message Delivered!</h3>
                 <p className="text-slate-400 text-sm">
-                  An automated no-reply confirmation email has been dispatched to <span className="text-cyan-400">{formData.email}</span>.
+                  Thank you for reaching out! Your message has been sent successfully, and I will get back to you shortly.
                 </p>
               </div>
             )}
