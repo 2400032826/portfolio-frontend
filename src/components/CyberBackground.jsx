@@ -31,100 +31,35 @@ export default function CyberBackground() {
     window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
 
-    // Particle pool
-    const particleCount = Math.min(Math.floor(width / 25), 45);
-    const particles = Array.from({ length: particleCount }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      size: Math.random() * 2 + 0.5,
-      speedY: Math.random() * 0.4 + 0.1,
-      speedX: (Math.random() - 0.5) * 0.2,
-      opacity: Math.random() * 0.5 + 0.1,
-      color: Math.random() > 0.3 ? '#00f0ff' : '#a855f7'
-    }));
-
-    // Technical HUD code symbols floating
-    const symbols = ['01', 'SYS_OK', '0010', 'VENKAT.DEV', '</>', 'JAVA', 'REACT', 'HTTP_200'];
-    const floatingSymbols = Array.from({ length: 8 }, () => ({
-      text: symbols[Math.floor(Math.random() * symbols.length)],
-      x: Math.random() * width,
-      y: Math.random() * height,
-      speedY: Math.random() * 0.3 + 0.1,
-      opacity: Math.random() * 0.12 + 0.03
-    }));
-
     const render = () => {
-      // Smooth mouse follow
-      mouseX += (targetMouseX - mouseX) * 0.05;
-      mouseY += (targetMouseY - mouseY) * 0.05;
+      mouseX += (targetMouseX - mouseX) * 0.04;
+      mouseY += (targetMouseY - mouseY) * 0.04;
 
       ctx.clearRect(0, 0, width, height);
 
-      // Dark background fill
-      ctx.fillStyle = '#07090e';
+      // Light background fill (#f8fafc)
+      ctx.fillStyle = '#f8fafc';
       ctx.fillRect(0, 0, width, height);
 
-      // Subtle Grid overlay
-      ctx.strokeStyle = 'rgba(0, 240, 255, 0.03)';
-      ctx.lineWidth = 1;
-      const gridSize = 40;
-
-      for (let x = 0; x < width; x += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, height);
-        ctx.stroke();
-      }
-      for (let y = 0; y < height; y += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
-        ctx.stroke();
+      // Ultra-subtle dot grid
+      ctx.fillStyle = '#e2e8f0';
+      const spacing = 32;
+      for (let x = spacing / 2; x < width; x += spacing) {
+        for (let y = spacing / 2; y < height; y += spacing) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
 
-      // Cursor Radial Glow Beam
-      const gradient = ctx.createRadialGradient(mouseX, mouseY, 10, mouseX, mouseY, 450);
-      gradient.addColorStop(0, 'rgba(0, 240, 255, 0.08)');
-      gradient.addColorStop(0.5, 'rgba(168, 85, 247, 0.03)');
-      gradient.addColorStop(1, 'rgba(7, 9, 14, 0)');
+      // Soft light blue cursor gradient glow (#EAF4FF)
+      const gradient = ctx.createRadialGradient(mouseX, mouseY, 20, mouseX, mouseY, 400);
+      gradient.addColorStop(0, 'rgba(219, 234, 254, 0.45)');
+      gradient.addColorStop(0.5, 'rgba(239, 246, 255, 0.2)');
+      gradient.addColorStop(1, 'rgba(248, 250, 252, 0)');
+
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
-
-      // Render Floating Particles
-      particles.forEach((p) => {
-        p.y -= p.speedY;
-        p.x += p.speedX;
-
-        if (p.y < 0) {
-          p.y = height;
-          p.x = Math.random() * width;
-        }
-        if (p.x < 0 || p.x > width) p.speedX *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.opacity;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = p.color;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-        ctx.globalAlpha = 1;
-      });
-
-      // Render Floating Technical Symbols
-      ctx.font = '10px monospace';
-      floatingSymbols.forEach((s) => {
-        s.y -= s.speedY;
-        if (s.y < 0) {
-          s.y = height;
-          s.x = Math.random() * width;
-        }
-        ctx.fillStyle = '#00f0ff';
-        ctx.globalAlpha = s.opacity;
-        ctx.fillText(s.text, s.x, s.y);
-        ctx.globalAlpha = 1;
-      });
 
       animationFrameId = requestAnimationFrame(render);
     };

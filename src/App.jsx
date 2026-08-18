@@ -18,7 +18,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [cursorState, setCursorState] = useState({ type: 'default', text: '' });
 
-  // IntersectionObserver to highlight active navbar section cleanly
+  // IntersectionObserver to highlight active navbar section
   useEffect(() => {
     if (!introDone) return;
 
@@ -46,17 +46,17 @@ export default function App() {
   }, [introDone]);
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 font-sans selection:bg-cyan-500/30 relative overflow-x-hidden">
-      {/* First-Load Intro Sequence */}
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-blue-600/15 relative overflow-x-hidden">
+      {/* Intro Sequence */}
       {!introDone && <IntroLoader onComplete={() => setIntroDone(true)} />}
 
-      {/* Custom Pointer */}
+      {/* Light Theme Custom Pointer */}
       <CustomCursor cursorState={cursorState} />
 
-      {/* Dynamic Background */}
+      {/* Light Theme Dynamic Background */}
       <CyberBackground />
 
-      {/* Floating Header Navbar */}
+      {/* White SaaS Header Navbar */}
       <Navbar
         activeSection={activeSection}
         soundEnabled={soundEnabled}
@@ -64,8 +64,8 @@ export default function App() {
         setCursorState={setCursorState}
       />
 
-      {/* Main Page Flow */}
-      <main className="relative z-10 space-y-8">
+      {/* Main Page Narrative Flow */}
+      <main className="relative z-10 space-y-6">
         <Hero
           soundEnabled={soundEnabled}
           setCursorState={setCursorState}
@@ -98,7 +98,7 @@ export default function App() {
         />
       </main>
 
-      {/* Minimal Footer */}
+      {/* Clean Light Footer */}
       <Footer setCursorState={setCursorState} />
     </div>
   );

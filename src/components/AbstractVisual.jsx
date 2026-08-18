@@ -15,8 +15,8 @@ export default function AbstractVisual() {
       const deltaY = (e.clientY - centerY) / (window.innerHeight / 2);
 
       setOffset({
-        x: Math.max(-12, Math.min(12, deltaX * 12)),
-        y: Math.max(-10, Math.min(10, deltaY * 10))
+        x: Math.max(-8, Math.min(8, deltaX * 8)),
+        y: Math.max(-6, Math.min(6, deltaY * 6))
       });
     };
 
@@ -27,45 +27,43 @@ export default function AbstractVisual() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full max-w-[380px] aspect-square mx-auto flex items-center justify-center select-none"
+      className="relative w-full max-w-[360px] aspect-square mx-auto flex items-center justify-center select-none"
     >
-      {/* Outer Glow Spheres */}
-      <div className="absolute inset-4 rounded-full bg-gradient-to-tr from-cyan-500/10 via-purple-500/10 to-transparent blur-2xl animate-pulse-glow" />
+      {/* Soft Ambient Radial Background Glow */}
+      <div className="absolute inset-4 rounded-full bg-blue-100/60 blur-2xl animate-pulse-glow" />
 
-      {/* Rotating Concentric Glass Rings */}
-      <div className="absolute inset-2 border border-cyan-500/20 rounded-full animate-spin [animation-duration:30s] border-dashed pointer-events-none" />
-      <div className="absolute inset-8 border border-purple-500/20 rounded-full animate-spin [animation-duration:45s] [animation-direction:reverse] pointer-events-none" />
+      {/* Outer Subtle Concentric Light Ring */}
+      <div className="absolute inset-2 border border-blue-200/60 rounded-full pointer-events-none" />
 
-      {/* Abstract Glassmorphism Container with Dynamic Offset */}
+      {/* Clean White Card Frame with Subtle Parallax */}
       <div
-        className="relative w-64 h-64 cyber-glass rounded-3xl border border-cyan-500/30 shadow-[0_0_40px_rgba(0,240,255,0.15)] flex items-center justify-center transition-transform duration-300 ease-out"
+        className="relative w-64 h-64 bg-white rounded-3xl border border-blue-100 shadow-xl flex flex-col items-center justify-center transition-transform duration-300 ease-out p-6"
         style={{
           transform: `perspective(1000px) rotateX(${-offset.y}deg) rotateY(${offset.x}deg) translate3d(${offset.x}px, ${offset.y}px, 0)`
         }}
       >
-        {/* Corner Accent Dots */}
-        <div className="absolute top-4 left-4 w-1.5 h-1.5 rounded-full bg-cyan-400" />
-        <div className="absolute top-4 right-4 w-1.5 h-1.5 rounded-full bg-purple-400" />
-        <div className="absolute bottom-4 left-4 w-1.5 h-1.5 rounded-full bg-emerald-400" />
-        <div className="absolute bottom-4 right-4 w-1.5 h-1.5 rounded-full bg-cyan-400" />
+        {/* Corner Accents */}
+        <div className="absolute top-4 left-4 w-2 h-2 rounded-full bg-blue-600" />
+        <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-red-500" />
+        <div className="absolute bottom-4 left-4 w-2 h-2 rounded-full bg-emerald-500" />
+        <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-blue-600" />
 
-        {/* Floating Code Accent Pills */}
-        <div className="absolute -top-3 left-8 cyber-glass border border-cyan-500/30 px-3 py-0.5 rounded-full text-[10px] font-mono text-cyan-400">
-          REACT • JAVA • DATA
+        {/* Floating Light Badges */}
+        <div className="absolute -top-3 left-6 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full text-[10px] font-mono font-bold text-blue-700 shadow-xs">
+          REACT • JAVA • SQL
         </div>
 
-        <div className="absolute -bottom-3 right-8 cyber-glass border border-purple-500/30 px-3 py-0.5 rounded-full text-[10px] font-mono text-purple-400">
+        <div className="absolute -bottom-3 right-6 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full text-[10px] font-mono font-bold text-amber-700 shadow-xs">
           AWS CERTIFIED
         </div>
 
-        {/* Central Monogram Graphic (VK) */}
-        <div className="relative flex flex-col items-center justify-center">
-          <svg viewBox="0 0 100 100" className="w-32 h-32 text-cyan-400 drop-shadow-[0_0_15px_rgba(0,240,255,0.6)]">
+        {/* Central VK Monogram Graphic */}
+        <div className="flex flex-col items-center justify-center">
+          <svg viewBox="0 0 100 100" className="w-28 h-28 text-blue-600 drop-shadow-xs">
             <defs>
-              <linearGradient id="vkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#00f0ff" />
-                <stop offset="50%" stopColor="#a855f7" />
-                <stop offset="100%" stopColor="#10b981" />
+              <linearGradient id="vkLightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#2563eb" />
+                <stop offset="100%" stopColor="#1d4ed8" />
               </linearGradient>
             </defs>
 
@@ -73,31 +71,31 @@ export default function AbstractVisual() {
             <path
               d="M 22,25 L 38,75 M 38,75 L 54,25"
               fill="none"
-              stroke="url(#vkGrad)"
-              strokeWidth="5"
+              stroke="url(#vkLightGrad)"
+              strokeWidth="6"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
             <path
               d="M 60,25 L 60,75 M 60,50 L 78,25 M 60,50 L 78,75"
               fill="none"
-              stroke="url(#vkGrad)"
-              strokeWidth="5"
+              stroke="url(#vkLightGrad)"
+              strokeWidth="6"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
 
-            {/* Node Points */}
-            <circle cx="22" cy="25" r="3" fill="#00f0ff" />
-            <circle cx="38" cy="75" r="3" fill="#a855f7" />
-            <circle cx="54" cy="25" r="3" fill="#10b981" />
-            <circle cx="60" cy="25" r="3" fill="#00f0ff" />
-            <circle cx="78" cy="25" r="3" fill="#a855f7" />
-            <circle cx="78" cy="75" r="3" fill="#10b981" />
+            {/* Accent Nodes */}
+            <circle cx="22" cy="25" r="3.5" fill="#2563eb" />
+            <circle cx="38" cy="75" r="3.5" fill="#ef4444" />
+            <circle cx="54" cy="25" r="3.5" fill="#10b981" />
+            <circle cx="60" cy="25" r="3.5" fill="#2563eb" />
+            <circle cx="78" cy="25" r="3.5" fill="#ef4444" />
+            <circle cx="78" cy="75" r="3.5" fill="#10b981" />
           </svg>
 
-          <span className="text-xs font-mono tracking-widest text-slate-300 font-bold mt-1">
-            VENKAT<span className="text-cyan-400">.DEV</span>
+          <span className="text-xs font-mono font-extrabold tracking-widest text-slate-800 mt-1">
+            VENKAT<span className="text-blue-600">.DEV</span>
           </span>
         </div>
       </div>

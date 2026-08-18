@@ -24,17 +24,17 @@ export default function TerminalWidget({ soundEnabled }) {
     } else if (cmd === 'about') {
       newLogs.push({
         type: 'output',
-        text: "K Venkat Chowdary — CSE Student & Full-Stack Developer. PCMB Score: 580/600 (High Distinction)."
+        text: "K Venkat Chowdary — CSE Student & Full-Stack Developer. PCMB Score: 580/600."
       });
     } else if (cmd === 'skills') {
       newLogs.push({
         type: 'output',
-        text: "Tech Stack: C, C++, Python, Java, JavaScript, React, Spring Boot, MySQL, Git, Tailwind CSS."
+        text: "Tech Stack: C, C++, Python, Java, JavaScript, React, Spring Boot, MySQL, Git."
       });
     } else if (cmd === 'education') {
       newLogs.push({
         type: 'output',
-        text: "B.Tech CSE (2022-2026) | Sri Vidyaniketan PU College (580/600) | Blessed Alphonsa High School."
+        text: "B.Tech CSE (KL University) | Sri Vidyaniketan PU College (580/600) | Blessed Alphonsa (527/625)."
       });
     } else if (cmd === 'contact') {
       newLogs.push({
@@ -57,47 +57,47 @@ export default function TerminalWidget({ soundEnabled }) {
   };
 
   return (
-    <div className="cyber-glass border border-cyan-500/30 rounded-2xl overflow-hidden shadow-2xl font-mono text-xs sm:text-sm">
+    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs font-mono text-xs">
       {/* Top Window Bar */}
-      <div className="bg-[#0b0f19] px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+      <div className="bg-slate-100 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <div className="w-3 h-3 rounded-full bg-red-500/80" />
-          <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-          <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-          <span className="text-slate-400 text-xs ml-2 flex items-center space-x-1">
-            <TerminalIcon size={12} className="text-cyan-400" />
-            <span>venkat@command-center: ~</span>
+          <div className="w-3 h-3 rounded-full bg-red-400" />
+          <div className="w-3 h-3 rounded-full bg-amber-400" />
+          <div className="w-3 h-3 rounded-full bg-emerald-400" />
+          <span className="text-slate-600 text-xs ml-2 flex items-center space-x-1 font-bold">
+            <TerminalIcon size={13} className="text-blue-600" />
+            <span>venkat@dev: ~</span>
           </span>
         </div>
-        <div className="text-[10px] text-cyan-400 border border-cyan-500/30 px-2 py-0.5 rounded">
-          INTERACTIVE_SHELL
+        <div className="text-[10px] text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded font-bold">
+          TERMINAL
         </div>
       </div>
 
-      {/* Terminal Content Log */}
-      <div className="p-4 h-56 overflow-y-auto space-y-2 bg-[#07090e]/90 font-mono">
+      {/* Terminal Content */}
+      <div className="p-4 h-56 overflow-y-auto space-y-2 bg-slate-900 text-slate-200 font-mono">
         {terminalLogs.map((log, index) => (
           <p
             key={index}
-            className={log.type === 'input' ? 'text-cyan-400 font-bold' : 'text-slate-300'}
+            className={log.type === 'input' ? 'text-blue-400 font-bold' : 'text-slate-300'}
           >
             {log.text}
           </p>
         ))}
       </div>
 
-      {/* Input Prompt Form */}
-      <form onSubmit={handleTerminalSubmit} className="border-t border-slate-800 px-4 py-2.5 flex items-center bg-[#0b0f19]">
-        <span className="text-cyan-400 font-bold mr-2">$</span>
+      {/* Input Prompt */}
+      <form onSubmit={handleTerminalSubmit} className="border-t border-slate-200 px-4 py-2.5 flex items-center bg-white">
+        <span className="text-blue-600 font-bold mr-2">$</span>
         <input
           type="text"
-          className="bg-transparent border-none outline-none text-slate-100 w-full font-mono text-xs focus:ring-0 placeholder:text-slate-600"
+          className="bg-transparent border-none outline-none text-slate-800 w-full font-mono text-xs focus:ring-0 placeholder:text-slate-400"
           placeholder="Type 'help' for commands..."
           value={terminalInput}
           onChange={(e) => setTerminalInput(e.target.value)}
         />
-        <button type="submit" className="text-xs text-cyan-400 hover:text-cyan-300 font-bold ml-2">
-          EXECUTE
+        <button type="submit" className="text-xs text-blue-600 hover:text-blue-700 font-bold ml-2">
+          RUN
         </button>
       </form>
     </div>

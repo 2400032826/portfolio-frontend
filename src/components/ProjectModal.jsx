@@ -16,11 +16,11 @@ export default function ProjectModal({ project, onClose, soundEnabled }) {
 
   return (
     <div
-      className="fixed inset-0 z-[10000] flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-xl animate-fadeIn font-mono"
+      className="fixed inset-0 z-[10000] flex items-center justify-center p-4 sm:p-6 bg-slate-900/75 backdrop-blur-sm animate-fadeIn font-sans"
       onClick={onClose}
     >
       <div
-        className="cyber-glass w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-cyan-500/40 p-6 sm:p-8 space-y-6 relative shadow-[0_0_50px_rgba(0,240,255,0.25)]"
+        className="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-slate-200 p-6 sm:p-8 space-y-6 relative shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -29,37 +29,37 @@ export default function ProjectModal({ project, onClose, soundEnabled }) {
             playSound('click', soundEnabled);
             onClose();
           }}
-          className="absolute top-6 right-6 p-2 rounded-full border border-slate-700 bg-slate-900 text-slate-300 hover:text-cyan-400 hover:border-cyan-400 transition cursor-pointer"
+          className="absolute top-6 right-6 p-2 rounded-full border border-slate-200 bg-slate-100 text-slate-600 hover:text-slate-900 hover:border-slate-300 transition cursor-pointer"
         >
           <X size={18} />
         </button>
 
         {/* Modal Header */}
         <div className="space-y-2">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-cyan-500/40 bg-cyan-950/50 text-cyan-400 text-xs">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-mono font-bold">
             <span>{project.status}</span>
             <span>•</span>
             <span>{project.type}</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">{project.title}</h2>
-          <p className="text-cyan-300 text-xs sm:text-sm font-semibold">{project.tagline}</p>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">{project.title}</h2>
+          <p className="text-blue-600 text-xs sm:text-sm font-semibold font-mono">{project.tagline}</p>
         </div>
 
         {/* Overview Box */}
-        <div className="p-4 bg-slate-900/80 border border-slate-800 rounded-xl space-y-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
-          <p className="text-slate-400 text-[10px] uppercase font-mono">// PROJECT_SUMMARY</p>
+        <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs sm:text-sm text-slate-700 leading-relaxed font-sans">
+          <p className="text-slate-500 text-[10px] uppercase font-mono font-bold">// PROJECT SUMMARY</p>
           <p>{project.description}</p>
         </div>
 
         {/* Tech Stack */}
         <div className="space-y-2">
-          <p className="text-slate-400 text-xs uppercase">// TECHNOLOGIES_USED</p>
+          <p className="text-slate-500 text-xs font-mono font-bold uppercase">// TECHNOLOGIES USED</p>
           <div className="flex flex-wrap gap-2">
             {project.tech.map((t, idx) => (
               <span
                 key={idx}
-                className="px-3 py-1 bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 text-xs rounded-lg font-mono"
+                className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-xs rounded-lg font-mono font-bold"
               >
                 {t}
               </span>
@@ -69,11 +69,11 @@ export default function ProjectModal({ project, onClose, soundEnabled }) {
 
         {/* Key Highlights */}
         <div className="space-y-2">
-          <p className="text-slate-400 text-xs uppercase">// DEVELOPMENT_HIGHLIGHTS</p>
-          <ul className="space-y-2 text-xs sm:text-sm text-slate-300 font-sans">
+          <p className="text-slate-500 text-xs font-mono font-bold uppercase">// DEVELOPMENT HIGHLIGHTS</p>
+          <ul className="space-y-2 text-xs sm:text-sm text-slate-700 font-sans">
             {project.highlights.map((h, idx) => (
               <li key={idx} className="flex items-start space-x-2">
-                <CheckCircle2 size={16} className="text-cyan-400 mt-0.5 shrink-0" />
+                <CheckCircle2 size={16} className="text-blue-600 mt-0.5 shrink-0" />
                 <span>{h}</span>
               </li>
             ))}
@@ -81,13 +81,13 @@ export default function ProjectModal({ project, onClose, soundEnabled }) {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-800 font-mono">
+        <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-200 font-sans">
           {project.github && (
             <a
               href={project.github}
               target="_blank"
               rel="noreferrer"
-              className="flex-1 flex items-center justify-center space-x-2 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold py-3 rounded-xl transition"
+              className="flex-1 flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition"
             >
               <FaGithub size={18} />
               <span>VIEW GITHUB REPOSITORY</span>
@@ -98,7 +98,7 @@ export default function ProjectModal({ project, onClose, soundEnabled }) {
               href={project.demo}
               target="_blank"
               rel="noreferrer"
-              className="flex-1 flex items-center justify-center space-x-2 border border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 font-bold py-3 rounded-xl transition"
+              className="flex-1 flex items-center justify-center space-x-2 border border-blue-600 text-blue-600 hover:bg-blue-50 font-bold py-3 rounded-xl transition"
             >
               <ExternalLink size={18} />
               <span>LIVE DEMO</span>

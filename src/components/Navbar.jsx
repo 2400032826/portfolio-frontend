@@ -13,7 +13,7 @@ export default function Navbar({
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -45,23 +45,22 @@ export default function Navbar({
     >
       <div className="max-w-6xl mx-auto px-6">
         <div
-          className={`cyber-glass rounded-full px-6 py-3 flex items-center justify-between border transition-all duration-300 ${
+          className={`rounded-full px-6 py-3 flex items-center justify-between transition-all duration-300 ${
             scrolled
-              ? 'bg-[#07090e]/90 border-cyan-500/30 shadow-[0_0_20px_rgba(0,240,255,0.15)] backdrop-blur-xl'
-              : 'bg-[#07090e]/60 border-slate-800'
+              ? 'bg-white/90 border border-slate-200 shadow-md backdrop-blur-md'
+              : 'bg-white/70 border border-slate-200/80 backdrop-blur-sm'
           }`}
         >
           {/* Logo */}
           <a
             href="#"
             onClick={() => handleNavClick('hero')}
-            className="flex items-center space-x-2 font-mono text-base font-bold tracking-wider group"
+            className="flex items-center space-x-1.5 font-sans text-base font-extrabold tracking-tight text-slate-900 group"
             onMouseEnter={() => setCursorState({ type: 'hover', text: 'HOME' })}
             onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
           >
-            <span className="text-white group-hover:text-cyan-400 transition">
-              VENKAT<span className="text-cyan-400">.DEV</span>
-            </span>
+            <span>VENKAT</span>
+            <span className="text-blue-600 font-mono">.DEV</span>
           </a>
 
           {/* Desktop Nav Links */}
@@ -78,19 +77,19 @@ export default function Navbar({
                   }}
                   onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
                   className={`relative py-1 transition-colors duration-200 cursor-pointer ${
-                    isActive ? 'text-cyan-400 font-bold' : 'text-slate-400 hover:text-white'
+                    isActive ? 'text-blue-600 font-extrabold' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   {link.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-400 rounded-full shadow-[0_0_8px_#00f0ff]" />
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
                   )}
                 </button>
               );
             })}
           </nav>
 
-          {/* Right Action Icons (Sound Toggle) */}
+          {/* Right Sound Toggle */}
           <div className="flex items-center space-x-3">
             <button
               onClick={() => {
@@ -101,18 +100,18 @@ export default function Navbar({
               onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
               className={`p-2 rounded-full border transition flex items-center justify-center cursor-pointer ${
                 soundEnabled
-                  ? 'border-cyan-400 bg-cyan-500/10 text-cyan-400 shadow-[0_0_10px_rgba(0,240,255,0.3)]'
-                  : 'border-slate-800 text-slate-500 hover:text-slate-300'
+                  ? 'border-blue-600 bg-blue-50 text-blue-600 shadow-xs'
+                  : 'border-slate-200 text-slate-400 hover:text-slate-600 hover:border-slate-300'
               }`}
-              title={soundEnabled ? 'Disable Sound' : 'Enable Sound'}
+              title={soundEnabled ? 'Disable Audio' : 'Enable Audio'}
             >
               {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
             </button>
 
-            {/* Mobile Drawer Trigger */}
+            {/* Mobile Hamburger Trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-slate-300 hover:text-cyan-400 transition"
+              className="lg:hidden p-2 text-slate-700 hover:text-blue-600 transition"
             >
               {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -120,14 +119,14 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-2 mx-6 p-6 cyber-glass border border-cyan-500/30 rounded-2xl flex flex-col space-y-4 font-mono text-xs font-bold">
+        <div className="lg:hidden mt-2 mx-6 p-6 bg-white border border-slate-200 shadow-xl rounded-2xl flex flex-col space-y-3 font-mono text-xs font-bold">
           {navLinks.map((link) => (
             <button
               key={link.id}
               onClick={() => handleNavClick(link.id)}
-              className="text-left text-slate-300 hover:text-cyan-400 transition py-2 border-b border-slate-800"
+              className="text-left text-slate-700 hover:text-blue-600 transition py-2 border-b border-slate-100"
             >
               {link.label}
             </button>
