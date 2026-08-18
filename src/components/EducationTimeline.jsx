@@ -31,7 +31,10 @@ export default function EducationTimeline() {
                 <GraduationCap size={18} className="text-[#2563eb]" />
               </div>
 
-              <h3 className="text-lg font-bold text-[#0f172a] mb-1">{edu.degree}</h3>
+              <h3 className="text-lg font-bold text-[#0f172a] mb-0.5">{edu.degree}</h3>
+              {edu.specialization && (
+                <span className="text-xs font-mono font-bold text-[#2563eb] block mb-2">{edu.specialization}</span>
+              )}
               <p className="text-slate-500 text-xs font-medium mb-3">{edu.institution} — {edu.location}</p>
 
               {edu.highlight && (

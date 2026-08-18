@@ -1,8 +1,13 @@
 export const personalInfo = {
   name: "K Venkat Chowdary",
+  preferredName: "Venkat",
+  currentStatus: "B.Tech Undergraduate Student",
+  degree: "B.Tech in Computer Science & Engineering",
+  specialization: "Data Science",
+  currentFocus: "Data Science, AI, and Web Development",
   shortGreeting: "Hi, I'm Venkat.",
   handle: "venkat.dev",
-  title: "Full-Stack Developer",
+  title: "Developer • Data • AI • Builder",
   roleHeadline: "Developer • Data • AI • Builder",
   shortStatement: "I build full-stack applications, explore data and AI, and turn ideas into useful digital products.",
   pcmbScore: "580/600",
@@ -20,8 +25,8 @@ export const personalInfo = {
   ],
   aboutDomains: [
     { title: "FULL-STACK", desc: "Building responsive, modern web applications with clean frontend UX and scalable backend REST APIs." },
-    { title: "DATA", desc: "Working with relational databases, SQL queries, data processing pipelines, and structured analytics." },
-    { title: "AI", desc: "Exploring artificial intelligence concepts, smart interfaces, and modern developer tooling integration." },
+    { title: "DATA SCIENCE", desc: "Specializing in data science, analytics pipelines, statistical modeling, and structured database queries." },
+    { title: "AI", desc: "Exploring artificial intelligence concepts, smart machine learning workflows, and modern developer tooling integration." },
     { title: "BUILDING", desc: "Currently developing SLV Fashion Studio — an intuitive full-stack web platform." }
   ]
 };
@@ -29,12 +34,12 @@ export const personalInfo = {
 export const skillsData = [
   { name: 'C', category: 'Languages', level: 85, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg', desc: 'Low-level memory management and core data structures.' },
   { name: 'C++', category: 'Languages', level: 90, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg', desc: 'Object-oriented logic, algorithms, and system optimization.' },
-  { name: 'Python', category: 'Languages', level: 88, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', desc: 'Backend logic, data analytics, automation scripts, and AI logic.' },
+  { name: 'Python', category: 'Languages', level: 88, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', desc: 'Backend logic, data science analytics, automation scripts, and AI logic.' },
   { name: 'Java', category: 'Languages', level: 90, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg', desc: 'Enterprise application design, OOP patterns, and backend microservices.' },
   { name: 'JavaScript', category: 'Languages', level: 92, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg', desc: 'Async ES6+, web app state management, and modern browser logic.' },
   { name: 'HTML5', category: 'Frontend', level: 95, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg', desc: 'Semantic web structure, accessibility standards, and SEO markup.' },
   { name: 'CSS3', category: 'Frontend', level: 90, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg', desc: 'Flexbox, CSS Grid, responsive design layouts, and keyframe animations.' },
-  { name: 'Tailwind CSS', category: 'Frontend', level: 92, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg', desc: 'Utility-first rapid styling, glassmorphism UI, and design tokens.' },
+  { name: 'Tailwind CSS', category: 'Frontend', level: 92, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg', desc: 'Utility-first rapid styling, clean UI layouts, and design tokens.' },
   { name: 'React', category: 'Frontend', level: 90, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg', desc: 'Component architecture, state hooks, reactive UI flows.' },
   { name: 'Spring Boot', category: 'Backend', level: 85, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg', desc: 'Java RESTful web APIs, layered MVC architecture, and backend services.' },
   { name: 'MySQL', category: 'Database', level: 86, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg', desc: 'Relational database schema, SQL queries, and index optimization.' },
@@ -46,23 +51,24 @@ export const educationData = [
   {
     period: "2022 — 2026",
     degree: "B.Tech in Computer Science & Engineering",
+    specialization: "Specialization in Data Science",
     institution: "KL University",
-    location: "Vijayawada, AP",
-    details: "Focusing on Data Structures & Algorithms, Full-Stack Web Development, Java Spring Boot, and Database Management."
+    location: "Vijayawada, AP, India",
+    details: "Specializing in Data Science, Data Structures & Algorithms, Full-Stack Web Development, Java Spring Boot, and Database Systems."
   },
   {
     period: "2020 — 2022",
     degree: "Higher Secondary — Science (PCMB)",
-    institution: "Sri Vidyaniketan PU College",
-    location: "Sriramnagar",
+    institution: "Sri Vidyanikethan PU College",
+    location: "Gangavathi, Karnataka",
     highlight: "Score: 580 / 600 (High Distinction)",
-    details: "Achieved 580/600 in Physics, Chemistry, Mathematics, and Biology with academic excellence in mathematics."
+    details: "Achieved 580/600 in Physics, Chemistry, Mathematics, and Biology with academic distinction."
   },
   {
     period: "Secondary",
     degree: "10th / Secondary School",
     institution: "Blessed Alphonsa Convent High School",
-    location: "Guntur District",
+    location: "Raichur, Karnataka",
     highlight: "Score: 527 / 625 (84.32%)",
     details: "Foundational secondary education with distinction in Science and Mathematics."
   }
