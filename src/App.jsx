@@ -7,22 +7,25 @@ import EducationTimeline from './components/EducationTimeline';
 import SkillUniverse from './components/SkillUniverse';
 import CertificationsSection from './components/CertificationsSection';
 import ProjectShowcase from './components/ProjectShowcase';
+import ProjectDetailView from './components/ProjectDetailView';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
+import ScrollJourneyIndicator from './components/ScrollJourneyIndicator';
 
 export default function App() {
   const [introDone, setIntroDone] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const [currentView, setCurrentView] = useState('home'); // 'home' or 'slv-fashion-studio'
 
   // IntersectionObserver to highlight active navbar section
   useEffect(() => {
-    if (!introDone) return;
+    if (!introDone || currentView !== 'home') return;
 
     const sections = ['hero', 'about', 'education', 'skills', 'certifications', 'projects', 'contact'];
     const observerOptions = {
       root: null,
-      rootMargin: '-30% 0px -40% 0px',
+      rootMargin: '-35% 0px -35% 0px',
       threshold: 0
     };
 
@@ -40,36 +43,48 @@ export default function App() {
     });
 
     return () => observer.disconnect();
-  }, [introDone]);
+  }, [introDone, currentView]);
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#0f172a] font-sans selection:bg-[#2563eb]/15 relative overflow-x-hidden">
       {/* Intro Sequence */}
       {!introDone && <IntroLoader onComplete={() => setIntroDone(true)} />}
 
-      {/* Premium Dark Navy Navbar */}
+      {/* Minimal Scroll Journey Indicator */}
+      {currentView === 'home' && (
+        <ScrollJourneyIndicator activeSection={activeSection} />
+      )}
+
+      {/* Red Navbar */}
       <Navbar
         activeSection={activeSection}
         soundEnabled={soundEnabled}
         setSoundEnabled={setSoundEnabled}
       />
 
-      {/* Main Page Flow with Rhythm */}
-      <main className="relative z-10">
-        <Hero soundEnabled={soundEnabled} />
+      {/* Main Content Router */}
+      {currentView === 'slv-fashion-studio' ? (
+        <ProjectDetailView onBack={() => setCurrentView('home')} />
+      ) : (
+        <main className="relative z-10">
+          <Hero soundEnabled={soundEnabled} />
 
-        <AboutSection soundEnabled={soundEnabled} />
+          <AboutSection soundEnabled={soundEnabled} />
 
-        <EducationTimeline />
+          <EducationTimeline />
 
-        <SkillUniverse soundEnabled={soundEnabled} />
+          <SkillUniverse soundEnabled={soundEnabled} />
 
-        <CertificationsSection soundEnabled={soundEnabled} />
+          <CertificationsSection soundEnabled={soundEnabled} />
 
-        <ProjectShowcase soundEnabled={soundEnabled} />
+          <ProjectShowcase
+            soundEnabled={soundEnabled}
+            onViewDetail={(projectId) => setCurrentView(projectId)}
+          />
 
-        <ContactSection soundEnabled={soundEnabled} />
-      </main>
+          <ContactSection soundEnabled={soundEnabled} />
+        </main>
+      )}
 
       {/* Footer */}
       <Footer />

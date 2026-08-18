@@ -1,18 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaGithub } from 'react-icons/fa6';
 import { ArrowUpRight, Code2, Eye } from 'lucide-react';
 import { projectsData } from '../data/portfolioData';
-import ProjectModal from './ProjectModal';
 import { playSound } from '../utils/audio';
 
-export default function ProjectShowcase({ soundEnabled }) {
-  const [selectedProject, setSelectedProject] = useState(null);
-
-  const handleOpenModal = (project) => {
-    playSound('modal', soundEnabled);
-    setSelectedProject(project);
-  };
-
+export default function ProjectShowcase({ soundEnabled, onViewDetail }) {
   return (
     <section id="projects" className="py-20 px-6 max-w-6xl mx-auto bg-white">
       {/* Section Header */}
@@ -53,7 +45,7 @@ export default function ProjectShowcase({ soundEnabled }) {
 
                 <p className="text-[#2563eb] text-sm font-mono font-bold">{project.tagline}</p>
 
-                <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
+                <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-sans">
                   {project.description}
                 </p>
 
@@ -72,7 +64,10 @@ export default function ProjectShowcase({ soundEnabled }) {
                 {/* Buttons */}
                 <div className="flex flex-wrap gap-4 pt-4">
                   <button
-                    onClick={() => handleOpenModal(project)}
+                    onClick={() => {
+                      playSound('modal', soundEnabled);
+                      if (onViewDetail) onViewDetail('slv-fashion-studio');
+                    }}
                     className="flex items-center space-x-2 bg-[#2563eb] hover:bg-blue-700 text-white font-sans font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-xs transition cursor-pointer"
                   >
                     <Eye size={16} />
@@ -114,15 +109,6 @@ export default function ProjectShowcase({ soundEnabled }) {
           </div>
         ))}
       </div>
-
-      {/* Project Modal */}
-      {selectedProject && (
-        <ProjectModal
-          project={selectedProject}
-          onClose={() => setSelectedProject(null)}
-          soundEnabled={soundEnabled}
-        />
-      )}
     </section>
   );
 }
