@@ -15,8 +15,8 @@ export default function AbstractVisual() {
       const deltaY = (e.clientY - centerY) / (window.innerHeight / 2);
 
       setOffset({
-        x: Math.max(-8, Math.min(8, deltaX * 8)),
-        y: Math.max(-6, Math.min(6, deltaY * 6))
+        x: Math.max(-10, Math.min(10, deltaX * 10)),
+        y: Math.max(-8, Math.min(8, deltaY * 8))
       });
     };
 
@@ -27,75 +27,82 @@ export default function AbstractVisual() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full max-w-[360px] aspect-square mx-auto flex items-center justify-center select-none"
+      className="relative w-full max-w-[380px] aspect-square mx-auto flex items-center justify-center select-none"
     >
-      {/* Soft Ambient Radial Background Glow */}
-      <div className="absolute inset-4 rounded-full bg-blue-100/60 blur-2xl animate-pulse-glow" />
+      {/* Soft Blue Radial Background Light */}
+      <div className="absolute inset-0 rounded-full bg-[#eaf2ff]/80 blur-3xl" />
 
-      {/* Outer Subtle Concentric Light Ring */}
-      <div className="absolute inset-2 border border-blue-200/60 rounded-full pointer-events-none" />
-
-      {/* Clean White Card Frame with Subtle Parallax */}
+      {/* Abstract Flat Graphic Composition (NO CARD, NO SHADOW CONTAINER) */}
       <div
-        className="relative w-64 h-64 bg-white rounded-3xl border border-blue-100 shadow-xl flex flex-col items-center justify-center transition-transform duration-300 ease-out p-6"
+        className="relative w-72 h-72 flex items-center justify-center transition-transform duration-300 ease-out"
         style={{
-          transform: `perspective(1000px) rotateX(${-offset.y}deg) rotateY(${offset.x}deg) translate3d(${offset.x}px, ${offset.y}px, 0)`
+          transform: `translate3d(${offset.x}px, ${offset.y}px, 0)`
         }}
       >
-        {/* Corner Accents */}
-        <div className="absolute top-4 left-4 w-2 h-2 rounded-full bg-blue-600" />
-        <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-red-500" />
-        <div className="absolute bottom-4 left-4 w-2 h-2 rounded-full bg-emerald-500" />
-        <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-blue-600" />
+        {/* Soft Blue Geometric Layers */}
+        <div className="absolute w-56 h-56 rounded-3xl bg-gradient-to-tr from-[#eaf2ff] to-[#f0f6ff] border border-blue-200/80 transform rotate-6" />
+        <div className="absolute w-56 h-56 rounded-3xl border-2 border-blue-300/40 transform -rotate-3" />
 
-        {/* Floating Light Badges */}
-        <div className="absolute -top-3 left-6 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full text-[10px] font-mono font-bold text-blue-700 shadow-xs">
-          REACT • JAVA • SQL
-        </div>
+        {/* Controlled Crimson Red Accent Geometrics */}
+        <div className="absolute -top-2 right-8 w-4 h-4 rounded-full bg-[#ef4444]" />
+        <div className="absolute -bottom-2 left-8 w-3 h-3 bg-[#ef4444] transform rotate-45" />
 
-        <div className="absolute -bottom-3 right-6 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full text-[10px] font-mono font-bold text-amber-700 shadow-xs">
-          AWS CERTIFIED
-        </div>
+        {/* Faint Structural Line Grid */}
+        <svg className="absolute inset-0 w-full h-full opacity-20 pointer-events-none">
+          <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#2563eb" strokeWidth="1" strokeDasharray="4 4" />
+          <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#2563eb" strokeWidth="1" strokeDasharray="4 4" />
+        </svg>
 
-        {/* Central VK Monogram Graphic */}
-        <div className="flex flex-col items-center justify-center">
-          <svg viewBox="0 0 100 100" className="w-28 h-28 text-blue-600 drop-shadow-xs">
+        {/* Oversized Graphic VK Monogram Visual */}
+        <div className="relative z-10 flex flex-col items-center justify-center">
+          <svg viewBox="0 0 100 100" className="w-36 h-36 drop-shadow-sm">
             <defs>
-              <linearGradient id="vkLightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient id="vkGraphicGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#2563eb" />
                 <stop offset="100%" stopColor="#1d4ed8" />
               </linearGradient>
             </defs>
 
-            {/* Stylized VK Monogram Lines */}
+            {/* Translucent Backdrop Monogram */}
             <path
-              d="M 22,25 L 38,75 M 38,75 L 54,25"
+              d="M 20,25 L 38,75 M 38,75 L 56,25 M 60,25 L 60,75 M 60,50 L 80,25 M 60,50 L 80,75"
               fill="none"
-              stroke="url(#vkLightGrad)"
+              stroke="#2563eb"
+              strokeWidth="12"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              opacity="0.12"
+            />
+
+            {/* Crisp Foreground Monogram Lines */}
+            <path
+              d="M 20,25 L 38,75 M 38,75 L 56,25"
+              fill="none"
+              stroke="url(#vkGraphicGrad)"
               strokeWidth="6"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
             <path
-              d="M 60,25 L 60,75 M 60,50 L 78,25 M 60,50 L 78,75"
+              d="M 60,25 L 60,75 M 60,50 L 80,25 M 60,50 L 80,75"
               fill="none"
-              stroke="url(#vkLightGrad)"
+              stroke="url(#vkGraphicGrad)"
               strokeWidth="6"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
 
-            {/* Accent Nodes */}
-            <circle cx="22" cy="25" r="3.5" fill="#2563eb" />
+            {/* Minimal Nodes */}
+            <circle cx="20" cy="25" r="3.5" fill="#2563eb" />
             <circle cx="38" cy="75" r="3.5" fill="#ef4444" />
-            <circle cx="54" cy="25" r="3.5" fill="#10b981" />
+            <circle cx="56" cy="25" r="3.5" fill="#2563eb" />
             <circle cx="60" cy="25" r="3.5" fill="#2563eb" />
-            <circle cx="78" cy="25" r="3.5" fill="#ef4444" />
-            <circle cx="78" cy="75" r="3.5" fill="#10b981" />
+            <circle cx="80" cy="25" r="3.5" fill="#ef4444" />
+            <circle cx="80" cy="75" r="3.5" fill="#2563eb" />
           </svg>
 
-          <span className="text-xs font-mono font-extrabold tracking-widest text-slate-800 mt-1">
-            VENKAT<span className="text-blue-600">.DEV</span>
+          <span className="text-xs font-mono font-extrabold tracking-widest text-[#0f172a] mt-2">
+            VENKAT<span className="text-[#2563eb]">.DEV</span>
           </span>
         </div>
       </div>

@@ -9,7 +9,7 @@ export default function Footer({ setCursorState }) {
   };
 
   return (
-    <footer className="border-t border-slate-800/80 py-12 px-6 bg-[#07090e] font-sans text-xs text-slate-400 relative z-10">
+    <footer className="border-t border-slate-800 py-12 px-6 bg-[#0a0f1d] font-sans text-xs text-slate-400 relative z-10">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Left Info */}
         <div className="space-y-1 text-center md:text-left">
@@ -23,7 +23,7 @@ export default function Footer({ setCursorState }) {
             href={personalInfo.github}
             target="_blank"
             rel="noreferrer"
-            className="hover:text-cyan-400 transition flex items-center space-x-1"
+            className="hover:text-cyan-400 transition flex items-center space-x-1 text-slate-300"
           >
             <FaGithub size={14} />
             <span>GitHub</span>
@@ -32,28 +32,28 @@ export default function Footer({ setCursorState }) {
             href={personalInfo.linkedin}
             target="_blank"
             rel="noreferrer"
-            className="hover:text-cyan-400 transition flex items-center space-x-1"
+            className="hover:text-cyan-400 transition flex items-center space-x-1 text-slate-300"
           >
             <FaLinkedin size={14} />
             <span>LinkedIn</span>
           </a>
           <a
             href={`mailto:${personalInfo.email}`}
-            className="hover:text-cyan-400 transition flex items-center space-x-1"
+            className="hover:text-cyan-400 transition flex items-center space-x-1 text-slate-300"
           >
             <Mail size={14} />
             <span>Email</span>
           </a>
         </div>
 
-        {/* Right Copyright & Scroll to Top */}
+        {/* Right Copyright */}
         <div className="flex items-center space-x-4">
           <span className="font-mono text-slate-500">© 2026 {personalInfo.name}</span>
           <button
             onClick={scrollToTop}
             onMouseEnter={() => setCursorState({ type: 'hover', text: 'TOP' })}
             onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
-            className="p-2 bg-slate-900 border border-slate-800 hover:border-cyan-400 text-slate-300 hover:text-cyan-400 rounded-xl transition cursor-pointer"
+            className="p-2 bg-slate-800 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-cyan-400 rounded-xl transition cursor-pointer"
             title="Scroll to Top"
           >
             <ChevronUp size={16} />

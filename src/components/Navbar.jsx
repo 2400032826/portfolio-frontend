@@ -40,31 +40,31 @@ export default function Navbar({
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'py-3' : 'py-5'
+        scrolled ? 'py-2.5' : 'py-4'
       }`}
     >
       <div className="max-w-6xl mx-auto px-6">
         <div
-          className={`rounded-full px-6 py-3 flex items-center justify-between transition-all duration-300 ${
+          className={`rounded-full px-6 py-3 flex items-center justify-between border transition-all duration-300 ${
             scrolled
-              ? 'bg-white/90 border border-slate-200 shadow-md backdrop-blur-md'
-              : 'bg-white/70 border border-slate-200/80 backdrop-blur-sm'
+              ? 'bg-[#f0f6ff]/95 border-blue-200 shadow-sm backdrop-blur-md'
+              : 'bg-[#f0f6ff]/80 border-blue-200/60 backdrop-blur-xs'
           }`}
         >
           {/* Logo */}
           <a
             href="#"
             onClick={() => handleNavClick('hero')}
-            className="flex items-center space-x-1.5 font-sans text-base font-extrabold tracking-tight text-slate-900 group"
+            className="flex items-center space-x-1 font-sans text-base font-extrabold tracking-tight text-[#0f172a] group"
             onMouseEnter={() => setCursorState({ type: 'hover', text: 'HOME' })}
             onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
           >
             <span>VENKAT</span>
-            <span className="text-blue-600 font-mono">.DEV</span>
+            <span className="text-[#2563eb] font-mono">.DEV</span>
           </a>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center space-x-6 text-xs font-mono font-bold tracking-wider">
+          <nav className="hidden lg:flex items-center space-x-6 text-xs font-mono font-bold tracking-wider text-[#0f172a]">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -77,19 +77,19 @@ export default function Navbar({
                   }}
                   onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
                   className={`relative py-1 transition-colors duration-200 cursor-pointer ${
-                    isActive ? 'text-blue-600 font-extrabold' : 'text-slate-600 hover:text-slate-900'
+                    isActive ? 'text-[#2563eb] font-extrabold' : 'text-[#0f172a] hover:text-[#2563eb]'
                   }`}
                 >
                   {link.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#2563eb] rounded-full" />
                   )}
                 </button>
               );
             })}
           </nav>
 
-          {/* Right Sound Toggle */}
+          {/* Right Controls */}
           <div className="flex items-center space-x-3">
             <button
               onClick={() => {
@@ -100,10 +100,10 @@ export default function Navbar({
               onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
               className={`p-2 rounded-full border transition flex items-center justify-center cursor-pointer ${
                 soundEnabled
-                  ? 'border-blue-600 bg-blue-50 text-blue-600 shadow-xs'
-                  : 'border-slate-200 text-slate-400 hover:text-slate-600 hover:border-slate-300'
+                  ? 'border-[#2563eb] bg-blue-100 text-[#2563eb]'
+                  : 'border-blue-200 text-slate-500 hover:text-[#0f172a]'
               }`}
-              title={soundEnabled ? 'Disable Audio' : 'Enable Audio'}
+              title={soundEnabled ? 'Disable Sound' : 'Enable Sound'}
             >
               {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
             </button>
@@ -111,7 +111,7 @@ export default function Navbar({
             {/* Mobile Hamburger Trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-slate-700 hover:text-blue-600 transition"
+              className="lg:hidden p-2 text-[#0f172a] hover:text-[#2563eb] transition"
             >
               {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -119,14 +119,14 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-2 mx-6 p-6 bg-white border border-slate-200 shadow-xl rounded-2xl flex flex-col space-y-3 font-mono text-xs font-bold">
+        <div className="lg:hidden mt-2 mx-6 p-6 bg-[#f0f6ff] border border-blue-200 shadow-xl rounded-2xl flex flex-col space-y-3 font-mono text-xs font-bold">
           {navLinks.map((link) => (
             <button
               key={link.id}
               onClick={() => handleNavClick(link.id)}
-              className="text-left text-slate-700 hover:text-blue-600 transition py-2 border-b border-slate-100"
+              className="text-left text-[#0f172a] hover:text-[#2563eb] transition py-2 border-b border-blue-100"
             >
               {link.label}
             </button>
