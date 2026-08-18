@@ -45,7 +45,7 @@ export default function ProjectShowcase({ onViewDetail }) {
 
         {/* Featured Project Card */}
         <div
-          className="card-hover rounded-3xl overflow-hidden"
+          className="card-hover stagger-child stagger-1 rounded-3xl overflow-hidden"
           style={{ border: '1px solid #e2e8f0', backgroundColor: '#f8fafc' }}
         >
           {/* Top red accent */}

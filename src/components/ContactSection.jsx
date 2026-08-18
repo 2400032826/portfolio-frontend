@@ -67,8 +67,8 @@ export default function ContactSection() {
     <section
       id="contact"
       ref={ref}
-      className="section-hidden py-24 px-6 relative"
-      style={{ backgroundColor: '#0f172a', borderTop: '4px solid #ef4444' }}
+      className="section-hidden contact-bg py-24 px-6 relative"
+      style={{ borderTop: '4px solid #ef4444' }}
     >
       <div className="max-w-5xl mx-auto">
         {/* Section Label */}

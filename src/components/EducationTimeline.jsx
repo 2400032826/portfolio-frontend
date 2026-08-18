@@ -3,23 +3,26 @@ import { GraduationCap, CheckCircle2 } from 'lucide-react';
 import { educationData } from '../data/portfolioData';
 
 export default function EducationTimeline() {
-  const ref = useRef(null);
+  const sectionRef = useRef(null);
+  const lineRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) entry.target.classList.add('section-visible');
+        if (entry.isIntersecting) {
+          entry.target.classList.add('section-visible', 'timeline-active');
+        }
       },
       { threshold: 0.1 }
     );
-    if (ref.current) observer.observe(ref.current);
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
     <section
       id="education"
-      ref={ref}
+      ref={sectionRef}
       className="section-hidden py-24 px-6"
       style={{ backgroundColor: '#eaf2ff' }}
     >
@@ -40,15 +43,24 @@ export default function EducationTimeline() {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Vertical line — hidden on mobile */}
+          {/* Vertical line — hidden on mobile, animated draw on desktop */}
           <div
-            className="hidden md:block absolute left-5 top-6 bottom-6 w-px"
-            style={{ backgroundColor: '#bfdbfe' }}
-          />
+            className="hidden md:block absolute left-5 top-6 bottom-6 w-px overflow-hidden"
+            style={{ backgroundColor: '#e2e8f0' }}
+          >
+            <div
+              ref={lineRef}
+              className="w-full timeline-line"
+              style={{ backgroundColor: '#bfdbfe' }}
+            />
+          </div>
 
           <div className="space-y-8">
             {educationData.map((edu, idx) => (
-              <div key={idx} className="relative flex items-start space-x-0 md:space-x-10">
+              <div
+                key={idx}
+                className={`relative flex items-start md:space-x-10 stagger-child stagger-${idx + 1}`}
+              >
                 {/* Timeline Dot */}
                 <div
                   className="hidden md:flex shrink-0 w-10 h-10 rounded-full items-center justify-center z-10"
@@ -60,19 +72,16 @@ export default function EducationTimeline() {
                 {/* Card */}
                 <div
                   className="card-hover flex-1 p-6 sm:p-8 rounded-2xl relative overflow-hidden"
-                  style={{
-                    backgroundColor: '#ffffff',
-                    border: '1px solid #bfdbfe',
-                  }}
+                  style={{ backgroundColor: '#ffffff', border: '1px solid #bfdbfe' }}
                 >
-                  {/* Red left accent bar */}
+                  {/* Red left accent */}
                   <div
                     className="absolute top-0 left-0 bottom-0 w-1 rounded-l-2xl"
                     style={{ backgroundColor: '#ef4444' }}
                   />
 
                   <div className="pl-3">
-                    {/* Period */}
+                    {/* Period badge */}
                     <span
                       className="inline-block text-xs font-mono font-bold px-3 py-1 rounded-full mb-3"
                       style={{ backgroundColor: '#eaf2ff', color: '#2563eb' }}
@@ -109,7 +118,7 @@ export default function EducationTimeline() {
                           color: '#065f46',
                         }}
                       >
-                        <CheckCircle2 size={14} />
+                        <CheckCircle2 size={14} className="check-icon" />
                         <span>{edu.highlight}</span>
                       </div>
                     )}

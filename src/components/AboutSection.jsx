@@ -26,9 +26,7 @@ export default function AboutSection() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('section-visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('section-visible');
       },
       { threshold: 0.12 }
     );
@@ -61,7 +59,7 @@ export default function AboutSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           {/* Left — Story */}
-          <div className="space-y-5">
+          <div className="stagger-child stagger-1 space-y-5">
             <p className="text-base leading-relaxed" style={{ color: '#475569' }}>
               I'm <strong style={{ color: '#0f172a' }}>{personalInfo.name}</strong>, a{' '}
               Computer Science &amp; Engineering undergraduate at{' '}
@@ -99,16 +97,13 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* Right — Domain Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
+          {/* Right — Domain Cards with stagger */}
+          <div className="grid grid-cols-1 gap-4">
             {domains.map((d, i) => (
               <div
                 key={i}
-                className="card-hover flex items-start space-x-4 p-5 rounded-2xl"
-                style={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #e2e8f0',
-                }}
+                className={`card-hover stagger-child stagger-${i + 2} flex items-start space-x-4 p-5 rounded-2xl`}
+                style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0' }}
               >
                 <div
                   className="p-2.5 rounded-xl shrink-0"

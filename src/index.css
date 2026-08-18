@@ -38,54 +38,95 @@
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
 
-/* Section reveal animation */
-@keyframes revealUp {
-  from {
-    opacity: 0;
-    transform: translateY(32px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ============================================
+   KEYFRAME ANIMATIONS
+   ============================================ */
+
+/* Section / block reveal */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes revealFade {
+@keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-.reveal-up {
-  animation: revealUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+/* Hero greeting line — slides in from slight bottom */
+@keyframes greetingReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.reveal-fade {
-  animation: revealFade 0.5s ease both;
+/* Hero name — more deliberate upward reveal */
+@keyframes nameReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.scale-in {
-  animation: scaleIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+/* "Venkat" word — very subtle slow blue shimmer between two close shades */
+@keyframes venkatShimmer {
+  0%   { background-position: 0% center; }
+  50%  { background-position: 100% center; }
+  100% { background-position: 0% center; }
 }
+
+/* Timeline line draw downward */
+@keyframes lineGrow {
+  from { height: 0%; }
+  to   { height: 100%; }
+}
+
+/* Stagger card reveals inside sections */
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Verified badge checkmark pop-in */
+@keyframes checkPop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  70%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ============================================
+   UTILITY ANIMATION CLASSES
+   ============================================ */
+
+.reveal-up   { animation: fadeUp  0.65s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.reveal-fade { animation: fadeIn  0.55s ease both; }
+.scale-in    { animation: scaleIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
 /* Stagger delays */
+.delay-50  { animation-delay:  50ms; }
 .delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
 .delay-200 { animation-delay: 200ms; }
+.delay-250 { animation-delay: 250ms; }
 .delay-300 { animation-delay: 300ms; }
+.delay-350 { animation-delay: 350ms; }
 .delay-400 { animation-delay: 400ms; }
 .delay-500 { animation-delay: 500ms; }
 .delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
 
-/* Section in-view trigger */
+/* ============================================
+   SECTION IN-VIEW TRANSITIONS
+   ============================================ */
+
 .section-hidden {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .section-visible {
@@ -93,17 +134,178 @@
   transform: translateY(0);
 }
 
-/* Card hover lift */
+/* Child stagger inside a visible section */
+.section-visible .stagger-child {
+  animation: cardReveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.section-visible .stagger-1 { animation-delay:  80ms; }
+.section-visible .stagger-2 { animation-delay: 180ms; }
+.section-visible .stagger-3 { animation-delay: 280ms; }
+.section-visible .stagger-4 { animation-delay: 380ms; }
+
+/* ============================================
+   VENKAT NAME SHIMMER
+   ============================================ */
+
+.venkat-shimmer {
+  background: linear-gradient(90deg, #2563eb 0%, #3b82f6 45%, #2563eb 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: venkatShimmer 5s ease-in-out infinite;
+}
+
+/* ============================================
+   CARD HOVER LIFT
+   ============================================ */
+
 .card-hover {
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.25s ease,
+              box-shadow  0.25s ease,
+              transform   0.25s ease;
 }
 .card-hover:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px -8px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 14px 32px -8px rgba(37, 99, 235, 0.13);
   border-color: #bfdbfe;
 }
 
-/* Reduced motion support */
+/* ============================================
+   STAT CARD HOVER (Hero highlights)
+   ============================================ */
+
+.stat-card {
+  transition: transform   0.22s ease,
+              box-shadow  0.22s ease,
+              border-color 0.22s ease;
+  cursor: default;
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px -6px rgba(37, 99, 235, 0.14);
+  border-color: #bfdbfe !important;
+}
+.stat-card:hover .stat-value {
+  transform: translateY(-2px);
+  transition: transform 0.22s ease;
+}
+
+/* ============================================
+   BUTTON POLISH
+   ============================================ */
+
+.btn-primary {
+  transition: background-color 0.2s ease,
+              transform  0.2s ease,
+              box-shadow 0.2s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.35);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  transition: border-color 0.2s ease,
+              color       0.2s ease,
+              transform   0.2s ease,
+              box-shadow  0.2s ease;
+}
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.08);
+}
+.btn-secondary:active { transform: translateY(0); }
+
+/* Arrow icon nudge on button hover */
+.btn-arrow {
+  display: inline-flex;
+  transition: transform 0.2s ease;
+}
+.btn-primary:hover .btn-arrow,
+.btn-secondary:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+/* ============================================
+   SKILL CARD HOVER
+   ============================================ */
+
+.skill-card {
+  transition: border-color 0.2s ease,
+              box-shadow  0.2s ease,
+              transform   0.2s ease;
+}
+.skill-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -4px rgba(37, 99, 235, 0.12);
+  border-color: #93c5fd !important;
+}
+.skill-card:hover .skill-icon {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+}
+
+/* ============================================
+   TIMELINE LINE DRAW
+   ============================================ */
+
+.timeline-line {
+  height: 0;
+  transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.timeline-active .timeline-line {
+  height: 100%;
+}
+
+/* ============================================
+   VERIFIED BADGE
+   ============================================ */
+
+.check-icon {
+  display: inline-block;
+}
+.section-visible .check-icon {
+  animation: checkPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: 400ms;
+}
+
+/* ============================================
+   CONTACT SECTION GRADIENT PULSE
+   ============================================ */
+
+@keyframes navyPulse {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+.contact-bg {
+  background: linear-gradient(135deg, #0f172a 0%, #111827 50%, #0f172a 100%);
+  background-size: 200% 200%;
+  animation: navyPulse 12s ease infinite;
+}
+
+/* ============================================
+   CERT CARD HOVER
+   ============================================ */
+
+.cert-card {
+  transition: transform   0.25s ease,
+              box-shadow  0.25s ease,
+              border-color 0.25s ease;
+}
+.cert-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -8px rgba(37, 99, 235, 0.14);
+  border-color: #93c5fd !important;
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
@@ -115,5 +317,10 @@
   .section-hidden {
     opacity: 1;
     transform: none;
+  }
+  .venkat-shimmer {
+    background: none;
+    -webkit-text-fill-color: #2563eb;
+    color: #2563eb;
   }
 }

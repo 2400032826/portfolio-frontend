@@ -51,24 +51,25 @@ export default function SkillUniverse() {
 
         {/* Category Filter Pills */}
         <div className="flex flex-wrap gap-2 mb-8">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className="px-4 py-2 rounded-full text-xs font-bold font-mono transition-all duration-200 cursor-pointer"
-              style={
-                activeCategory === cat
-                  ? { backgroundColor: '#2563eb', color: '#ffffff' }
-                  : {
-                      backgroundColor: '#ffffff',
-                      color: '#0f172a',
-                      border: '1px solid #e2e8f0',
-                    }
-              }
-            >
-              {cat}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className="px-4 py-2 rounded-full text-xs font-bold font-mono cursor-pointer"
+                style={{
+                  backgroundColor: isActive ? '#2563eb' : '#ffffff',
+                  color: isActive ? '#ffffff' : '#0f172a',
+                  border: isActive ? '1px solid #2563eb' : '1px solid #e2e8f0',
+                  transition: 'all 0.2s ease',
+                  boxShadow: isActive ? '0 2px 8px -2px rgba(37,99,235,0.3)' : 'none',
+                }}
+              >
+                {cat}
+              </button>
+            );
+          })}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -85,24 +86,19 @@ export default function SkillUniverse() {
                     <button
                       key={idx}
                       onClick={() => setSelectedSkill(skill)}
-                      className="flex flex-col items-center justify-center p-4 rounded-xl transition-all duration-200 cursor-pointer hover:-translate-y-0.5"
-                      style={
-                        isSelected
-                          ? {
-                              backgroundColor: '#eaf2ff',
-                              border: '1.5px solid #2563eb',
-                            }
-                          : {
-                              backgroundColor: '#ffffff',
-                              border: '1px solid #e2e8f0',
-                            }
-                      }
+                      className="skill-card flex flex-col items-center justify-center p-4 rounded-xl cursor-pointer"
+                      style={{
+                        backgroundColor: isSelected ? '#eaf2ff' : '#ffffff',
+                        border: isSelected ? '1.5px solid #2563eb' : '1px solid #e2e8f0',
+                        boxShadow: isSelected ? '0 4px 12px -4px rgba(37,99,235,0.15)' : 'none',
+                      }}
                     >
                       <img
                         src={skill.icon}
                         alt={skill.name}
-                        className="w-8 h-8 object-contain mb-2"
+                        className="skill-icon w-8 h-8 object-contain mb-2"
                         loading="lazy"
+                        style={{ transition: 'transform 0.2s ease' }}
                       />
                       <span
                         className="text-[11px] font-bold font-mono text-center"
@@ -121,7 +117,7 @@ export default function SkillUniverse() {
           <div className="lg:col-span-1">
             {selectedSkill ? (
               <div
-                className="p-6 rounded-2xl h-full space-y-4"
+                className="p-6 rounded-2xl h-full space-y-4 scale-in"
                 style={{ backgroundColor: '#eaf2ff', border: '1px solid #bfdbfe' }}
               >
                 <div className="flex items-center space-x-3">
@@ -142,11 +138,7 @@ export default function SkillUniverse() {
 
                 <div
                   className="p-4 rounded-xl text-sm leading-relaxed"
-                  style={{
-                    backgroundColor: '#ffffff',
-                    border: '1px solid #bfdbfe',
-                    color: '#475569',
-                  }}
+                  style={{ backgroundColor: '#ffffff', border: '1px solid #bfdbfe', color: '#475569' }}
                 >
                   {selectedSkill.desc}
                 </div>

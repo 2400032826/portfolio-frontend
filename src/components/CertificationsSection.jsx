@@ -194,10 +194,10 @@ export default function CertificationsSection() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {certificationsData.map((cert) => (
+          {certificationsData.map((cert, certIdx) => (
             <div
               key={cert.id}
-              className="card-hover relative overflow-hidden rounded-3xl flex flex-col"
+              className={`cert-card stagger-child stagger-${certIdx + 1} relative overflow-hidden rounded-3xl flex flex-col`}
               style={{
                 backgroundColor: '#ffffff',
                 border: '1px solid #bfdbfe',
@@ -219,12 +219,12 @@ export default function CertificationsSection() {
                     <Award size={22} />
                   </div>
                   <div
-                    className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono"
-                    style={{ backgroundColor: '#ecfdf5', border: '1px solid #a7f3d0', color: '#065f46' }}
-                  >
-                    <CheckCircle2 size={13} />
-                    <span>VERIFIED</span>
-                  </div>
+                  className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono"
+                  style={{ backgroundColor: '#ecfdf5', border: '1px solid #a7f3d0', color: '#065f46' }}
+                >
+                  <CheckCircle2 size={13} className="check-icon" />
+                  <span>VERIFIED</span>
+                </div>
                 </div>
 
                 {/* Inline document-style summary */}
