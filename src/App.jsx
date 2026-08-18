@@ -14,30 +14,24 @@ import ScrollJourneyIndicator from './components/ScrollJourneyIndicator';
 
 export default function App() {
   const [introDone, setIntroDone] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  const [currentView, setCurrentView] = useState('home'); // 'home' or 'slv-fashion-studio'
+  const [currentView, setCurrentView] = useState('home'); // 'home' | 'slv-fashion-studio'
 
-  // IntersectionObserver to highlight active navbar section
+  // IntersectionObserver for active nav section tracking
   useEffect(() => {
     if (!introDone || currentView !== 'home') return;
 
-    const sections = ['hero', 'about', 'education', 'skills', 'certifications', 'projects', 'contact'];
-    const observerOptions = {
-      root: null,
-      rootMargin: '-35% 0px -35% 0px',
-      threshold: 0
-    };
+    const sectionIds = ['hero', 'about', 'education', 'skills', 'certifications', 'projects', 'contact'];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { root: null, rootMargin: '-35% 0px -35% 0px', threshold: 0 }
+    );
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    }, observerOptions);
-
-    sections.forEach((id) => {
+    sectionIds.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
@@ -46,47 +40,50 @@ export default function App() {
   }, [introDone, currentView]);
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-[#0f172a] font-sans selection:bg-[#2563eb]/15 relative overflow-x-hidden">
-      {/* Intro Sequence */}
+    <div
+      className="min-h-screen font-sans overflow-x-hidden"
+      style={{ backgroundColor: '#f7fafc', color: '#0f172a' }}
+    >
+      {/* Intro Screen — max 1.1s */}
       {!introDone && <IntroLoader onComplete={() => setIntroDone(true)} />}
 
-      {/* Minimal Scroll Journey Indicator */}
-      {currentView === 'home' && (
+      {/* Scroll Journey Progress Indicator */}
+      {introDone && currentView === 'home' && (
         <ScrollJourneyIndicator activeSection={activeSection} />
       )}
 
-      {/* Red Navbar */}
-      <Navbar
-        activeSection={activeSection}
-        soundEnabled={soundEnabled}
-        setSoundEnabled={setSoundEnabled}
-      />
+      {/* Top Navigation */}
+      <Navbar activeSection={activeSection} />
 
-      {/* Main Content Router */}
+      {/* Main Content */}
       {currentView === 'slv-fashion-studio' ? (
-        <ProjectDetailView onBack={() => setCurrentView('home')} />
+        <ProjectDetailView onBack={() => { setCurrentView('home'); }} />
       ) : (
-        <main className="relative z-10">
-          <Hero soundEnabled={soundEnabled} />
+        <main>
+          {/* HERO — #f7fafc */}
+          <Hero />
 
-          <AboutSection soundEnabled={soundEnabled} />
+          {/* ABOUT — #ffffff */}
+          <AboutSection />
 
+          {/* EDUCATION — #eaf2ff */}
           <EducationTimeline />
 
-          <SkillUniverse soundEnabled={soundEnabled} />
+          {/* SKILLS — #ffffff */}
+          <SkillUniverse />
 
-          <CertificationsSection soundEnabled={soundEnabled} />
+          {/* CERTIFICATIONS — #eaf2ff */}
+          <CertificationsSection />
 
-          <ProjectShowcase
-            soundEnabled={soundEnabled}
-            onViewDetail={(projectId) => setCurrentView(projectId)}
-          />
+          {/* PROJECT — #ffffff */}
+          <ProjectShowcase onViewDetail={(id) => setCurrentView(id)} />
 
-          <ContactSection soundEnabled={soundEnabled} />
+          {/* CONTACT — #0f172a */}
+          <ContactSection />
         </main>
       )}
 
-      {/* Footer */}
+      {/* FOOTER — #0f172a */}
       <Footer />
     </div>
   );

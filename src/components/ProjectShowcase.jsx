@@ -1,74 +1,108 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FaGithub } from 'react-icons/fa6';
-import { ArrowUpRight, Code2, Eye } from 'lucide-react';
+import { Eye, Code2, CheckCircle2 } from 'lucide-react';
 import { projectsData } from '../data/portfolioData';
-import { playSound } from '../utils/audio';
 
-export default function ProjectShowcase({ soundEnabled, onViewDetail }) {
+export default function ProjectShowcase({ onViewDetail }) {
+  const project = projectsData[0];
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) entry.target.classList.add('section-visible');
+      },
+      { threshold: 0.1 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="projects" className="py-20 px-6 max-w-6xl mx-auto bg-white">
-      {/* Section Header */}
-      <div className="flex items-center space-x-3 mb-2 font-mono text-xs text-[#2563eb] font-bold">
-        <span>05</span>
-        <span className="w-8 h-px bg-blue-200" />
-        <span>FEATURED PROJECT</span>
-      </div>
+    <section
+      id="projects"
+      ref={ref}
+      className="section-hidden py-24 px-6"
+      style={{ backgroundColor: '#ffffff' }}
+    >
+      <div className="max-w-5xl mx-auto">
+        {/* Section Label */}
+        <div className="flex items-center space-x-3 mb-3">
+          <span className="text-xs font-mono font-bold" style={{ color: '#2563eb' }}>05</span>
+          <span className="w-8 h-px" style={{ backgroundColor: '#bfdbfe' }} />
+          <span className="text-xs font-mono font-bold" style={{ color: '#2563eb' }}>FEATURED PROJECT</span>
+        </div>
 
-      <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0f172a] mb-3 tracking-tight">
-        Current <span className="text-[#2563eb]">Build & Case Study</span>
-      </h2>
-      <p className="text-slate-600 text-sm max-w-xl mb-10 font-medium">
-        Primary application currently in active development.
-      </p>
+        <h2
+          className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3"
+          style={{ color: '#0f172a' }}
+        >
+          Current <span style={{ color: '#2563eb' }}>Build</span>
+        </h2>
+        <p className="text-sm mb-10" style={{ color: '#64748b' }}>
+          Primary application currently in active development.
+        </p>
 
-      {/* Projects Cards Showcase */}
-      <div className="grid grid-cols-1 gap-8">
-        {projectsData.map((project) => (
-          <div
-            key={project.id}
-            className="bg-[#f8fafc] p-8 rounded-3xl border border-slate-200 shadow-xs hover:shadow-md transition-all duration-300 relative overflow-hidden group"
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              {/* Info Left */}
-              <div className="lg:col-span-7 space-y-4 text-left">
-                <div className="flex items-center space-x-3 font-mono text-xs">
-                  {/* Small Red CURRENTLY DEVELOPING Indicator */}
-                  <span className="px-3 py-1 bg-red-50 border border-red-200 text-[#ef4444] font-extrabold rounded-full">
+        {/* Featured Project Card */}
+        <div
+          className="card-hover rounded-3xl overflow-hidden"
+          style={{ border: '1px solid #e2e8f0', backgroundColor: '#f8fafc' }}
+        >
+          {/* Top red accent */}
+          <div className="h-1" style={{ backgroundColor: '#ef4444' }} />
+
+          <div className="p-8 sm:p-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+              {/* Left — Project Info */}
+              <div className="space-y-5">
+                {/* Status badges */}
+                <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
+                  <span
+                    className="px-3 py-1.5 rounded-full font-extrabold"
+                    style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', color: '#ef4444' }}
+                  >
                     ● {project.status}
                   </span>
-                  <span className="text-[#0f172a] font-bold">{project.type}</span>
+                  <span className="font-bold" style={{ color: '#64748b' }}>
+                    {project.type}
+                  </span>
                 </div>
 
-                <h3 className="text-3xl font-extrabold text-[#0f172a] group-hover:text-[#2563eb] transition">
+                <h3 className="text-3xl sm:text-4xl font-extrabold" style={{ color: '#0f172a' }}>
                   {project.title}
                 </h3>
 
-                <p className="text-[#2563eb] text-sm font-mono font-bold">{project.tagline}</p>
+                <p className="text-sm font-bold font-mono" style={{ color: '#2563eb' }}>
+                  {project.tagline}
+                </p>
 
-                <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-sans">
+                <p className="text-sm sm:text-base leading-relaxed" style={{ color: '#475569' }}>
                   {project.description}
                 </p>
 
                 {/* Tech Badges */}
-                <div className="flex flex-wrap gap-2 pt-2">
+                <div className="flex flex-wrap gap-2 pt-1">
                   {project.tech.map((t, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 bg-white border border-slate-200 text-[#0f172a] font-mono text-xs rounded-lg font-bold shadow-2xs"
+                      className="px-3 py-1 rounded-lg text-xs font-bold font-mono"
+                      style={{
+                        backgroundColor: '#ffffff',
+                        border: '1px solid #e2e8f0',
+                        color: '#0f172a',
+                      }}
                     >
                       {t}
                     </span>
                   ))}
                 </div>
 
-                {/* Buttons */}
-                <div className="flex flex-wrap gap-4 pt-4">
+                {/* CTA Buttons */}
+                <div className="flex flex-wrap gap-4 pt-2">
                   <button
-                    onClick={() => {
-                      playSound('modal', soundEnabled);
-                      if (onViewDetail) onViewDetail('slv-fashion-studio');
-                    }}
-                    className="flex items-center space-x-2 bg-[#2563eb] hover:bg-blue-700 text-white font-sans font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-xs transition cursor-pointer"
+                    onClick={() => onViewDetail && onViewDetail('slv-fashion-studio')}
+                    className="inline-flex items-center space-x-2 font-bold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+                    style={{ backgroundColor: '#2563eb', color: '#ffffff' }}
                   >
                     <Eye size={16} />
                     <span>VIEW PROJECT DETAILS</span>
@@ -79,35 +113,59 @@ export default function ProjectShowcase({ soundEnabled, onViewDetail }) {
                       href={project.github}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center space-x-2 bg-white border border-slate-200 hover:border-slate-300 text-[#0f172a] font-sans font-bold text-xs sm:text-sm px-5 py-3.5 rounded-xl transition cursor-pointer"
+                      className="inline-flex items-center space-x-2 font-bold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 hover:-translate-y-0.5"
+                      style={{
+                        backgroundColor: '#ffffff',
+                        border: '1px solid #e2e8f0',
+                        color: '#0f172a',
+                      }}
                     >
                       <FaGithub size={16} />
-                      <span>GITHUB REPO</span>
-                      <ArrowUpRight size={14} className="text-slate-400" />
+                      <span>GITHUB</span>
                     </a>
                   )}
                 </div>
               </div>
 
-              {/* Right Feature Highlights */}
-              <div className="lg:col-span-5 bg-[#f0f6ff] p-6 rounded-2xl border border-blue-200 space-y-4">
-                <div className="flex items-center space-x-2 text-xs font-mono text-[#2563eb] font-bold">
+              {/* Right — Key Highlights */}
+              <div
+                className="p-6 rounded-2xl space-y-4"
+                style={{ backgroundColor: '#eaf2ff', border: '1px solid #bfdbfe' }}
+              >
+                <div className="flex items-center space-x-2 text-xs font-mono font-bold" style={{ color: '#2563eb' }}>
                   <Code2 size={16} />
                   <span>KEY HIGHLIGHTS</span>
                 </div>
 
-                <ul className="space-y-3 text-xs sm:text-sm text-[#0f172a] font-medium">
-                  {project.highlights.map((h, hIdx) => (
-                    <li key={hIdx} className="flex items-start space-x-2">
-                      <span className="text-[#2563eb] font-bold mt-0.5">▸</span>
-                      <span>{h}</span>
+                <ul className="space-y-4">
+                  {project.highlights.map((h, idx) => (
+                    <li key={idx} className="flex items-start space-x-3">
+                      <CheckCircle2
+                        size={16}
+                        className="shrink-0 mt-0.5"
+                        style={{ color: '#2563eb' }}
+                      />
+                      <span className="text-sm leading-relaxed" style={{ color: '#0f172a' }}>
+                        {h}
+                      </span>
                     </li>
                   ))}
                 </ul>
+
+                {/* Dev status note */}
+                <div
+                  className="p-4 rounded-xl text-xs font-mono"
+                  style={{ backgroundColor: '#ffffff', border: '1px solid #bfdbfe', color: '#64748b' }}
+                >
+                  <span className="font-bold block mb-1" style={{ color: '#0f172a' }}>
+                    Development Status
+                  </span>
+                  Currently in active local development. GitHub repository will be made public upon first stable release.
+                </div>
               </div>
             </div>
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );

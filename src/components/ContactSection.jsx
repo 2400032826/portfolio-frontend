@@ -1,228 +1,302 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle2, Copy, Check } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Mail, MapPin, Send, CheckCircle2, Copy, Check } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { personalInfo } from '../data/portfolioData';
-import { playSound } from '../utils/audio';
 
-export default function ContactSection({ soundEnabled }) {
+export default function ContactSection() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [statusMsg, setStatusMsg] = useState('');
   const [copiedField, setCopiedField] = useState(null);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) entry.target.classList.add('section-visible');
+      },
+      { threshold: 0.08 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   const handleCopy = (text, field) => {
-    playSound('click', soundEnabled);
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(text).catch(() => {});
     setCopiedField(field);
     setTimeout(() => setCopiedField(null), 2000);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    playSound('click', soundEnabled);
     setLoading(true);
     setStatusMsg('');
-
     try {
-      const response = await fetch(personalInfo.formspreeEndpoint, {
+      const res = await fetch(personalInfo.formspreeEndpoint, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message
-        })
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(formData),
       });
-
-      if (response.ok) {
+      if (res.ok) {
         setSubmitted(true);
         setStatusMsg('Message delivered successfully!');
       } else {
-        setStatusMsg('Failed to send message. Please try again.');
+        setStatusMsg('Failed to send. Please try again.');
       }
-    } catch (_err) {
+    } catch {
       setStatusMsg('Something went wrong. Please try again later.');
     }
-
     setLoading(false);
   };
 
+  const inputStyle = {
+    width: '100%',
+    backgroundColor: 'rgba(255,255,255,0.07)',
+    border: '1px solid rgba(255,255,255,0.12)',
+    borderRadius: '12px',
+    padding: '12px 14px',
+    color: '#ffffff',
+    fontSize: '14px',
+    fontFamily: 'inherit',
+    outline: 'none',
+    transition: 'border-color 0.2s',
+  };
+
   return (
-    <section id="contact" className="py-24 px-6 bg-[#0f172a] text-white relative border-t-4 border-[#ef4444]">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
-        <div className="flex items-center space-x-3 mb-2 font-mono text-xs text-[#2563eb] font-bold">
-          <span>06</span>
-          <span className="w-8 h-px bg-blue-500/50" />
-          <span className="text-cyan-400">CONTACT</span>
+    <section
+      id="contact"
+      ref={ref}
+      className="section-hidden py-24 px-6 relative"
+      style={{ backgroundColor: '#0f172a', borderTop: '4px solid #ef4444' }}
+    >
+      <div className="max-w-5xl mx-auto">
+        {/* Section Label */}
+        <div className="flex items-center space-x-3 mb-3">
+          <span className="text-xs font-mono font-bold" style={{ color: '#2563eb' }}>06</span>
+          <span className="w-8 h-px" style={{ backgroundColor: '#1e40af' }} />
+          <span className="text-xs font-mono font-bold" style={{ color: '#2563eb' }}>CONTACT</span>
         </div>
 
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-white mb-3 tracking-tight">
-          LET'S BUILD <span className="text-cyan-400">SOMETHING.</span>
+        <h2
+          className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-3"
+          style={{ color: '#ffffff' }}
+        >
+          Let&apos;s build something{' '}
+          <span style={{ color: '#2563eb' }}>together.</span>
         </h2>
-        <p className="text-slate-300 text-sm sm:text-base max-w-xl mb-12 font-medium">
-          Have an idea, project, or opportunity? My inbox is always open.
+        <p className="text-base mb-12" style={{ color: '#94a3b8' }}>
+          Have an idea, project, or opportunity? I&apos;d love to hear from you.
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Left Direct Contact Info */}
-          <div className="lg:col-span-5 space-y-4">
-            <div
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          {/* Left — Contact Info */}
+          <div className="lg:col-span-2 space-y-4">
+            {/* Email */}
+            <button
               onClick={() => handleCopy(personalInfo.email, 'email')}
-              className="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 flex items-center justify-between hover:border-cyan-400 transition cursor-pointer group"
+              className="w-full text-left flex items-center justify-between p-5 rounded-2xl transition-all duration-200 cursor-pointer group"
+              style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+              onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#2563eb')}
+              onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
             >
               <div className="flex items-center space-x-4">
-                <div className="p-3 bg-blue-600/20 text-cyan-400 rounded-xl">
-                  <Mail size={20} />
+                <div
+                  className="p-2.5 rounded-xl"
+                  style={{ backgroundColor: 'rgba(37,99,235,0.15)', color: '#60a5fa' }}
+                >
+                  <Mail size={18} />
                 </div>
                 <div>
-                  <div className="text-[11px] font-mono text-slate-400 uppercase">EMAIL</div>
-                  <div className="font-mono text-sm font-bold text-white group-hover:text-cyan-300 transition">
+                  <div className="text-[10px] font-mono uppercase mb-0.5" style={{ color: '#64748b' }}>EMAIL</div>
+                  <div className="text-sm font-bold" style={{ color: '#e2e8f0' }}>
                     {personalInfo.email}
                   </div>
                 </div>
               </div>
-              {copiedField === 'email' ? <Check size={18} className="text-emerald-400" /> : <Copy size={16} className="text-slate-500 group-hover:text-cyan-400" />}
-            </div>
+              {copiedField === 'email'
+                ? <Check size={16} style={{ color: '#34d399' }} />
+                : <Copy size={15} style={{ color: '#475569' }} />}
+            </button>
 
+            {/* Location */}
             <div
-              onClick={() => handleCopy(personalInfo.phone, 'phone')}
-              className="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 flex items-center justify-between hover:border-cyan-400 transition cursor-pointer group"
+              className="flex items-center space-x-4 p-5 rounded-2xl"
+              style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
             >
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-blue-600/20 text-cyan-400 rounded-xl">
-                  <Phone size={20} />
-                </div>
-                <div>
-                  <div className="text-[11px] font-mono text-slate-400 uppercase">PHONE</div>
-                  <div className="font-mono text-sm font-bold text-white group-hover:text-cyan-300 transition">
-                    {personalInfo.phone}
-                  </div>
-                </div>
-              </div>
-              {copiedField === 'phone' ? <Check size={18} className="text-emerald-400" /> : <Copy size={16} className="text-slate-500 group-hover:text-cyan-400" />}
-            </div>
-
-            <div className="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 flex items-center space-x-4">
-              <div className="p-3 bg-blue-600/20 text-cyan-400 rounded-xl">
-                <MapPin size={20} />
+              <div
+                className="p-2.5 rounded-xl"
+                style={{ backgroundColor: 'rgba(37,99,235,0.15)', color: '#60a5fa' }}
+              >
+                <MapPin size={18} />
               </div>
               <div>
-                <div className="text-[11px] font-mono text-slate-400 uppercase">LOCATION</div>
-                <div className="font-mono text-sm font-bold text-white">{personalInfo.location}</div>
+                <div className="text-[10px] font-mono uppercase mb-0.5" style={{ color: '#64748b' }}>LOCATION</div>
+                <div className="text-sm font-bold" style={{ color: '#e2e8f0' }}>{personalInfo.location}</div>
               </div>
             </div>
 
-            <div className="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 space-y-3">
-              <div className="text-xs font-mono text-slate-400 font-bold uppercase">FIND ME ONLINE</div>
+            {/* Social Links */}
+            <div
+              className="p-5 rounded-2xl space-y-3"
+              style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+            >
+              <div className="text-[10px] font-mono uppercase font-bold" style={{ color: '#64748b' }}>
+                FIND ME ONLINE
+              </div>
               <div className="flex space-x-3">
                 <a
                   href={personalInfo.github}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 p-3 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-center space-x-2 text-slate-200 hover:text-cyan-400 hover:border-cyan-400 transition font-mono text-xs font-bold"
+                  className="flex-1 flex items-center justify-center space-x-2 p-3 rounded-xl font-bold text-xs font-mono transition-all duration-200"
+                  style={{
+                    backgroundColor: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    color: '#cbd5e1',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#60a5fa';
+                    e.currentTarget.style.borderColor = '#2563eb';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#cbd5e1';
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+                  }}
                 >
-                  <FaGithub size={16} />
+                  <FaGithub size={15} />
                   <span>GitHub</span>
                 </a>
-
                 <a
                   href={personalInfo.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 p-3 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-center space-x-2 text-slate-200 hover:text-cyan-400 hover:border-cyan-400 transition font-mono text-xs font-bold"
+                  className="flex-1 flex items-center justify-center space-x-2 p-3 rounded-xl font-bold text-xs font-mono transition-all duration-200"
+                  style={{
+                    backgroundColor: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    color: '#cbd5e1',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#60a5fa';
+                    e.currentTarget.style.borderColor = '#2563eb';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#cbd5e1';
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+                  }}
                 >
-                  <FaLinkedin size={16} />
+                  <FaLinkedin size={15} />
                   <span>LinkedIn</span>
                 </a>
               </div>
             </div>
           </div>
 
-          {/* Right Contact Form */}
-          <div className="lg:col-span-7 bg-slate-900 p-8 rounded-2xl border border-slate-800 relative">
+          {/* Right — Contact Form */}
+          <div
+            className="lg:col-span-3 p-8 rounded-2xl"
+            style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)' }}
+          >
             {submitted ? (
-              <div className="py-12 text-center space-y-3">
-                <CheckCircle2 size={52} className="mx-auto text-emerald-400" />
-                <h3 className="text-2xl font-bold text-white">Message Delivered!</h3>
-                <p className="text-slate-300 text-sm max-w-md mx-auto">
-                  Thank you for reaching out! Your message has been sent to Venkat, and he will get back to you shortly.
+              <div className="py-12 text-center space-y-4">
+                <CheckCircle2 size={52} className="mx-auto" style={{ color: '#34d399' }} />
+                <h3 className="text-2xl font-bold" style={{ color: '#ffffff' }}>Message Delivered!</h3>
+                <p className="text-sm" style={{ color: '#94a3b8' }}>
+                  Thank you for reaching out. Venkat will get back to you shortly.
                 </p>
                 <button
-                  onClick={() => setSubmitted(false)}
-                  className="mt-4 px-6 py-2.5 bg-slate-800 text-cyan-400 border border-slate-700 rounded-xl font-bold text-xs hover:bg-slate-700 transition cursor-pointer font-mono"
+                  onClick={() => { setSubmitted(false); setFormData({ name: '', email: '', subject: '', message: '' }); }}
+                  className="mt-4 px-6 py-2.5 rounded-xl font-bold text-xs font-mono transition cursor-pointer"
+                  style={{ backgroundColor: 'rgba(255,255,255,0.08)', color: '#60a5fa', border: '1px solid rgba(255,255,255,0.12)' }}
                 >
                   Send Another Message
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 {statusMsg && (
-                  <div className="p-3 bg-slate-800 border border-cyan-500/40 text-cyan-400 text-xs rounded-xl font-mono">
+                  <div
+                    className="p-3 rounded-xl text-xs font-mono"
+                    style={{ backgroundColor: 'rgba(37,99,235,0.15)', border: '1px solid rgba(37,99,235,0.3)', color: '#93c5fd' }}
+                  >
                     {statusMsg}
                   </div>
                 )}
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1 font-mono">YOUR NAME</label>
-                  <input
-                    required
-                    type="text"
-                    className="w-full bg-[#07090e] border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400 text-xs sm:text-sm font-sans"
-                    placeholder="Enter your name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-xs font-bold font-mono mb-2" style={{ color: '#94a3b8' }}>
+                      YOUR NAME
+                    </label>
+                    <input
+                      required
+                      type="text"
+                      style={inputStyle}
+                      placeholder="Enter your name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onFocus={(e) => (e.target.style.borderColor = '#2563eb')}
+                      onBlur={(e) => (e.target.style.borderColor = 'rgba(255,255,255,0.12)')}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold font-mono mb-2" style={{ color: '#94a3b8' }}>
+                      YOUR EMAIL
+                    </label>
+                    <input
+                      required
+                      type="email"
+                      style={inputStyle}
+                      placeholder="you@example.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onFocus={(e) => (e.target.style.borderColor = '#2563eb')}
+                      onBlur={(e) => (e.target.style.borderColor = 'rgba(255,255,255,0.12)')}
+                    />
+                  </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1 font-mono">YOUR EMAIL</label>
-                  <input
-                    required
-                    type="email"
-                    className="w-full bg-[#07090e] border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400 text-xs sm:text-sm font-sans"
-                    placeholder="you@example.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1 font-mono">SUBJECT / TOPIC</label>
+                  <label className="block text-xs font-bold font-mono mb-2" style={{ color: '#94a3b8' }}>
+                    SUBJECT
+                  </label>
                   <input
                     required
                     type="text"
-                    className="w-full bg-[#07090e] border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400 text-xs sm:text-sm font-sans"
-                    placeholder="Project offer, opportunity, or inquiry"
+                    style={inputStyle}
+                    placeholder="Project, opportunity, or inquiry"
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    onFocus={(e) => (e.target.style.borderColor = '#2563eb')}
+                    onBlur={(e) => (e.target.style.borderColor = 'rgba(255,255,255,0.12)')}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1 font-mono">MESSAGE</label>
+                  <label className="block text-xs font-bold font-mono mb-2" style={{ color: '#94a3b8' }}>
+                    MESSAGE
+                  </label>
                   <textarea
                     required
-                    rows="4"
-                    className="w-full bg-[#07090e] border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400 text-xs sm:text-sm font-sans"
+                    rows={5}
+                    style={{ ...inputStyle, resize: 'vertical' }}
                     placeholder="Tell me about your idea..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onFocus={(e) => (e.target.style.borderColor = '#2563eb')}
+                    onBlur={(e) => (e.target.style.borderColor = 'rgba(255,255,255,0.12)')}
                   />
                 </div>
 
                 <button
                   disabled={loading}
                   type="submit"
-                  className="w-full bg-[#2563eb] hover:bg-blue-600 text-white font-mono font-bold py-3.5 rounded-xl transition shadow-sm flex items-center justify-center space-x-2 text-xs sm:text-sm cursor-pointer"
+                  className="w-full flex items-center justify-center space-x-2 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 cursor-pointer hover:-translate-y-0.5 disabled:opacity-60"
+                  style={{ backgroundColor: '#2563eb', color: '#ffffff' }}
                 >
                   <Send size={16} />
-                  <span>{loading ? 'SENDING...' : 'CONTACT ME'}</span>
+                  <span>{loading ? 'SENDING...' : 'SEND MESSAGE'}</span>
                 </button>
               </form>
             )}

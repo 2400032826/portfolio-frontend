@@ -1,53 +1,128 @@
-import React from 'react';
-import { CheckCircle2, GraduationCap } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { GraduationCap, CheckCircle2 } from 'lucide-react';
 import { educationData } from '../data/portfolioData';
 
 export default function EducationTimeline() {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) entry.target.classList.add('section-visible');
+      },
+      { threshold: 0.1 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="education" className="py-20 px-6 max-w-6xl mx-auto bg-[#f0f6ff]">
-      {/* Section Header */}
-      <div className="flex items-center space-x-3 mb-2 font-mono text-xs text-[#2563eb] font-bold">
-        <span>02</span>
-        <span className="w-8 h-px bg-blue-200" />
-        <span>EDUCATION</span>
-      </div>
+    <section
+      id="education"
+      ref={ref}
+      className="section-hidden py-24 px-6"
+      style={{ backgroundColor: '#eaf2ff' }}
+    >
+      <div className="max-w-5xl mx-auto">
+        {/* Section Label */}
+        <div className="flex items-center space-x-3 mb-3">
+          <span className="text-xs font-mono font-bold" style={{ color: '#2563eb' }}>02</span>
+          <span className="w-8 h-px" style={{ backgroundColor: '#bfdbfe' }} />
+          <span className="text-xs font-mono font-bold" style={{ color: '#2563eb' }}>EDUCATION</span>
+        </div>
 
-      <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0f172a] mb-10 tracking-tight">
-        Academic <span className="text-[#2563eb]">Background</span>
-      </h2>
+        <h2
+          className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-10"
+          style={{ color: '#0f172a' }}
+        >
+          Academic <span style={{ color: '#2563eb' }}>Background</span>
+        </h2>
 
-      {/* Clean Light Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {educationData.map((edu, idx) => (
+        {/* Timeline */}
+        <div className="relative">
+          {/* Vertical line — hidden on mobile */}
           <div
-            key={idx}
-            className="bg-white p-6 rounded-2xl border border-blue-200 shadow-xs flex flex-col justify-between hover:border-[#2563eb] transition space-y-4 relative overflow-hidden"
-          >
-            <div className="w-1 h-full bg-[#ef4444] absolute top-0 left-0" />
+            className="hidden md:block absolute left-5 top-6 bottom-6 w-px"
+            style={{ backgroundColor: '#bfdbfe' }}
+          />
 
-            <div>
-              <div className="flex justify-between items-center text-xs font-mono text-[#2563eb] font-bold mb-2">
-                <span>{edu.period}</span>
-                <GraduationCap size={18} className="text-[#2563eb]" />
-              </div>
-
-              <h3 className="text-lg font-bold text-[#0f172a] mb-0.5">{edu.degree}</h3>
-              {edu.specialization && (
-                <span className="text-xs font-mono font-bold text-[#2563eb] block mb-2">{edu.specialization}</span>
-              )}
-              <p className="text-slate-500 text-xs font-medium mb-3">{edu.institution} — {edu.location}</p>
-
-              {edu.highlight && (
-                <div className="inline-flex items-center space-x-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-xs font-bold rounded-lg mb-3">
-                  <CheckCircle2 size={14} />
-                  <span>{edu.highlight}</span>
+          <div className="space-y-8">
+            {educationData.map((edu, idx) => (
+              <div key={idx} className="relative flex items-start space-x-0 md:space-x-10">
+                {/* Timeline Dot */}
+                <div
+                  className="hidden md:flex shrink-0 w-10 h-10 rounded-full items-center justify-center z-10"
+                  style={{ backgroundColor: '#2563eb' }}
+                >
+                  <GraduationCap size={18} color="#ffffff" />
                 </div>
-              )}
 
-              <p className="text-slate-600 text-xs leading-relaxed font-sans">{edu.details}</p>
-            </div>
+                {/* Card */}
+                <div
+                  className="card-hover flex-1 p-6 sm:p-8 rounded-2xl relative overflow-hidden"
+                  style={{
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #bfdbfe',
+                  }}
+                >
+                  {/* Red left accent bar */}
+                  <div
+                    className="absolute top-0 left-0 bottom-0 w-1 rounded-l-2xl"
+                    style={{ backgroundColor: '#ef4444' }}
+                  />
+
+                  <div className="pl-3">
+                    {/* Period */}
+                    <span
+                      className="inline-block text-xs font-mono font-bold px-3 py-1 rounded-full mb-3"
+                      style={{ backgroundColor: '#eaf2ff', color: '#2563eb' }}
+                    >
+                      {edu.period}
+                    </span>
+
+                    <h3
+                      className="text-lg sm:text-xl font-extrabold mb-1"
+                      style={{ color: '#0f172a' }}
+                    >
+                      {edu.degree}
+                    </h3>
+
+                    {edu.specialization && (
+                      <p
+                        className="text-xs font-mono font-bold mb-2"
+                        style={{ color: '#2563eb' }}
+                      >
+                        {edu.specialization}
+                      </p>
+                    )}
+
+                    <p className="text-sm font-medium mb-4" style={{ color: '#64748b' }}>
+                      {edu.institution} &mdash; {edu.location}
+                    </p>
+
+                    {edu.highlight && (
+                      <div
+                        className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-xl mb-4 text-xs font-bold font-mono"
+                        style={{
+                          backgroundColor: '#ecfdf5',
+                          border: '1px solid #a7f3d0',
+                          color: '#065f46',
+                        }}
+                      >
+                        <CheckCircle2 size={14} />
+                        <span>{edu.highlight}</span>
+                      </div>
+                    )}
+
+                    <p className="text-sm leading-relaxed" style={{ color: '#475569' }}>
+                      {edu.details}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );
