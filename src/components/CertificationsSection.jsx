@@ -4,7 +4,7 @@ import { certificationsData } from '../data/portfolioData';
 import CertificateModal from './CertificateModal';
 import { playSound } from '../utils/audio';
 
-export default function CertificationsSection({ soundEnabled, setCursorState }) {
+export default function CertificationsSection({ soundEnabled }) {
   const [selectedCert, setSelectedCert] = useState(null);
 
   const handleOpenModal = (cert) => {
@@ -112,8 +112,6 @@ export default function CertificationsSection({ soundEnabled, setCursorState }) 
             {/* Action Trigger */}
             <button
               onClick={() => handleOpenModal(cert)}
-              onMouseEnter={() => setCursorState({ type: 'hover', text: 'VIEW' })}
-              onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
               className="w-full bg-[#0f172a] hover:bg-[#2563eb] text-white font-sans font-bold text-xs py-3 rounded-xl transition shadow-xs flex items-center justify-center space-x-2 cursor-pointer"
             >
               <Eye size={16} />

@@ -5,7 +5,7 @@ import { projectsData } from '../data/portfolioData';
 import ProjectModal from './ProjectModal';
 import { playSound } from '../utils/audio';
 
-export default function ProjectShowcase({ soundEnabled, setCursorState }) {
+export default function ProjectShowcase({ soundEnabled }) {
   const [selectedProject, setSelectedProject] = useState(null);
 
   const handleOpenModal = (project) => {
@@ -73,8 +73,6 @@ export default function ProjectShowcase({ soundEnabled, setCursorState }) {
                 <div className="flex flex-wrap gap-4 pt-4">
                   <button
                     onClick={() => handleOpenModal(project)}
-                    onMouseEnter={() => setCursorState({ type: 'hover', text: 'DETAILS' })}
-                    onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
                     className="flex items-center space-x-2 bg-[#2563eb] hover:bg-blue-700 text-white font-sans font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-xs transition cursor-pointer"
                   >
                     <Eye size={16} />
@@ -86,8 +84,6 @@ export default function ProjectShowcase({ soundEnabled, setCursorState }) {
                       href={project.github}
                       target="_blank"
                       rel="noreferrer"
-                      onMouseEnter={() => setCursorState({ type: 'hover', text: 'GITHUB' })}
-                      onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
                       className="flex items-center space-x-2 bg-white border border-slate-200 hover:border-slate-300 text-[#0f172a] font-sans font-bold text-xs sm:text-sm px-5 py-3.5 rounded-xl transition cursor-pointer"
                     >
                       <FaGithub size={16} />

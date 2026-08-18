@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import CustomCursor from './components/CustomCursor';
-import CyberBackground from './components/CyberBackground';
 import IntroLoader from './components/IntroLoader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -16,7 +14,6 @@ export default function App() {
   const [introDone, setIntroDone] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  const [cursorState, setCursorState] = useState({ type: 'default', text: '' });
 
   // IntersectionObserver to highlight active navbar section
   useEffect(() => {
@@ -46,60 +43,36 @@ export default function App() {
   }, [introDone]);
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-blue-600/15 relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#f8fafc] text-[#0f172a] font-sans selection:bg-[#2563eb]/15 relative overflow-x-hidden">
       {/* Intro Sequence */}
       {!introDone && <IntroLoader onComplete={() => setIntroDone(true)} />}
 
-      {/* Light Theme Custom Pointer */}
-      <CustomCursor cursorState={cursorState} />
-
-      {/* Light Theme Dynamic Background */}
-      <CyberBackground />
-
-      {/* White SaaS Header Navbar */}
+      {/* Premium Dark Navy Navbar */}
       <Navbar
         activeSection={activeSection}
         soundEnabled={soundEnabled}
         setSoundEnabled={setSoundEnabled}
-        setCursorState={setCursorState}
       />
 
-      {/* Main Page Narrative Flow */}
-      <main className="relative z-10 space-y-6">
-        <Hero
-          soundEnabled={soundEnabled}
-          setCursorState={setCursorState}
-        />
+      {/* Main Page Flow with Rhythm */}
+      <main className="relative z-10">
+        <Hero soundEnabled={soundEnabled} />
 
-        <AboutSection
-          soundEnabled={soundEnabled}
-        />
+        <AboutSection soundEnabled={soundEnabled} />
 
         <EducationTimeline />
 
-        <SkillUniverse
-          soundEnabled={soundEnabled}
-          setCursorState={setCursorState}
-        />
+        <SkillUniverse soundEnabled={soundEnabled} />
 
-        <CertificationsSection
-          soundEnabled={soundEnabled}
-          setCursorState={setCursorState}
-        />
+        <CertificationsSection soundEnabled={soundEnabled} />
 
-        <ProjectShowcase
-          soundEnabled={soundEnabled}
-          setCursorState={setCursorState}
-        />
+        <ProjectShowcase soundEnabled={soundEnabled} />
 
-        <ContactSection
-          soundEnabled={soundEnabled}
-          setCursorState={setCursorState}
-        />
+        <ContactSection soundEnabled={soundEnabled} />
       </main>
 
-      {/* Clean Light Footer */}
-      <Footer setCursorState={setCursorState} />
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

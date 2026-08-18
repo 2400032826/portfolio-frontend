@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { skillsData } from '../data/portfolioData';
 import { playSound } from '../utils/audio';
 
-export default function SkillUniverse({ soundEnabled, setCursorState }) {
+export default function SkillUniverse({ soundEnabled }) {
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedSkill, setSelectedSkill] = useState(skillsData[0]);
 
@@ -42,11 +42,6 @@ export default function SkillUniverse({ soundEnabled, setCursorState }) {
               playSound('click', soundEnabled);
               setActiveCategory(cat);
             }}
-            onMouseEnter={() => {
-              playSound('hover', soundEnabled);
-              setCursorState({ type: 'hover', text: cat });
-            }}
-            onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
             className={`px-4 py-2 rounded-full font-mono text-xs font-bold transition cursor-pointer ${
               activeCategory === cat
                 ? 'bg-[#2563eb] text-white shadow-xs'
@@ -68,11 +63,6 @@ export default function SkillUniverse({ soundEnabled, setCursorState }) {
                 <div
                   key={idx}
                   onClick={() => handleSelectSkill(skill)}
-                  onMouseEnter={() => {
-                    playSound('hover', soundEnabled);
-                    setCursorState({ type: 'hover', text: skill.name });
-                  }}
-                  onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
                   className={`p-4 rounded-xl border flex flex-col items-center justify-center space-y-2 cursor-pointer transition transform hover:scale-105 ${
                     isSelected
                       ? 'border-[#2563eb] bg-[#f0f6ff] shadow-xs ring-1 ring-[#2563eb]'
@@ -87,7 +77,7 @@ export default function SkillUniverse({ soundEnabled, setCursorState }) {
           </div>
         </div>
 
-        {/* Floating Skill Info Panel */}
+        {/* Skill Info Panel */}
         <div className="lg:col-span-4 space-y-4">
           {selectedSkill && (
             <div className="bg-[#f0f6ff] p-6 rounded-2xl border border-blue-200 shadow-xs space-y-4">

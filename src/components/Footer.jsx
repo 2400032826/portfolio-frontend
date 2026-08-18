@@ -3,7 +3,7 @@ import { ChevronUp, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { personalInfo } from '../data/portfolioData';
 
-export default function Footer({ setCursorState }) {
+export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -51,8 +51,6 @@ export default function Footer({ setCursorState }) {
           <span className="font-mono text-slate-500">© 2026 {personalInfo.name}</span>
           <button
             onClick={scrollToTop}
-            onMouseEnter={() => setCursorState({ type: 'hover', text: 'TOP' })}
-            onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
             className="p-2 bg-slate-800 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-cyan-400 rounded-xl transition cursor-pointer"
             title="Scroll to Top"
           >

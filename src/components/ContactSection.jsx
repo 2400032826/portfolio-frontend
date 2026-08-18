@@ -4,7 +4,7 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { personalInfo } from '../data/portfolioData';
 import { playSound } from '../utils/audio';
 
-export default function ContactSection({ soundEnabled, setCursorState }) {
+export default function ContactSection({ soundEnabled }) {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -74,8 +74,6 @@ export default function ContactSection({ soundEnabled, setCursorState }) {
           <div className="lg:col-span-5 space-y-4">
             <div
               onClick={() => handleCopy(personalInfo.email, 'email')}
-              onMouseEnter={() => setCursorState({ type: 'hover', text: 'COPY' })}
-              onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
               className="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 flex items-center justify-between hover:border-cyan-400 transition cursor-pointer group"
             >
               <div className="flex items-center space-x-4">
@@ -94,8 +92,6 @@ export default function ContactSection({ soundEnabled, setCursorState }) {
 
             <div
               onClick={() => handleCopy(personalInfo.phone, 'phone')}
-              onMouseEnter={() => setCursorState({ type: 'hover', text: 'COPY' })}
-              onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
               className="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 flex items-center justify-between hover:border-cyan-400 transition cursor-pointer group"
             >
               <div className="flex items-center space-x-4">
@@ -129,8 +125,6 @@ export default function ContactSection({ soundEnabled, setCursorState }) {
                   href={personalInfo.github}
                   target="_blank"
                   rel="noreferrer"
-                  onMouseEnter={() => setCursorState({ type: 'hover', text: 'GITHUB' })}
-                  onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
                   className="flex-1 p-3 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-center space-x-2 text-slate-200 hover:text-cyan-400 hover:border-cyan-400 transition font-mono text-xs font-bold"
                 >
                   <FaGithub size={16} />
@@ -141,8 +135,6 @@ export default function ContactSection({ soundEnabled, setCursorState }) {
                   href={personalInfo.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  onMouseEnter={() => setCursorState({ type: 'hover', text: 'LINKEDIN' })}
-                  onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
                   className="flex-1 p-3 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-center space-x-2 text-slate-200 hover:text-cyan-400 hover:border-cyan-400 transition font-mono text-xs font-bold"
                 >
                   <FaLinkedin size={16} />
@@ -152,7 +144,7 @@ export default function ContactSection({ soundEnabled, setCursorState }) {
             </div>
           </div>
 
-          {/* Right Dark Contact Form */}
+          {/* Right Contact Form */}
           <div className="lg:col-span-7 bg-slate-900 p-8 rounded-2xl border border-slate-800 relative">
             {submitted ? (
               <div className="py-12 text-center space-y-3">
@@ -227,8 +219,6 @@ export default function ContactSection({ soundEnabled, setCursorState }) {
                 <button
                   disabled={loading}
                   type="submit"
-                  onMouseEnter={() => setCursorState({ type: 'hover', text: 'SEND' })}
-                  onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
                   className="w-full bg-[#2563eb] hover:bg-blue-600 text-white font-mono font-bold py-3.5 rounded-xl transition shadow-sm flex items-center justify-center space-x-2 text-xs sm:text-sm cursor-pointer"
                 >
                   <Send size={16} />
