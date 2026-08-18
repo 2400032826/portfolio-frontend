@@ -1,53 +1,41 @@
 import React from 'react';
 import { FaGithub } from 'react-icons/fa6';
-import { Mail, ArrowUpRight, Sparkles } from 'lucide-react';
-import CyberAvatar from './CyberAvatar';
+import { Mail, ArrowDown, ExternalLink } from 'lucide-react';
+import AbstractVisual from './AbstractVisual';
 import { personalInfo } from '../data/portfolioData';
 import { playSound } from '../utils/audio';
 
-export default function Hero({ soundEnabled, setCursorState, hoverSection, setHoverSection, onOpenAI }) {
+export default function Hero({ soundEnabled, setCursorState }) {
   return (
-    <section id="hero" className="relative min-h-screen pt-28 pb-16 px-6 max-w-6xl mx-auto flex items-center justify-center">
+    <section id="hero" className="relative min-h-[90vh] pt-32 pb-16 px-6 max-w-6xl mx-auto flex items-center justify-center">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
-        {/* Left Typography & Hero Info */}
+        {/* Left Intro Text */}
         <div className="lg:col-span-7 space-y-6 text-left">
-          {/* Status Badge */}
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/30 text-emerald-400 text-xs font-mono shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>{personalInfo.statusTag}</span>
-          </div>
-
-          {/* Headline Typography */}
+          {/* Greeting */}
           <div className="space-y-2">
-            <p className="text-xs font-mono tracking-widest text-cyan-400 uppercase">
-              // SYSTEM_COMMAND // WELCOME_VISITOR
-            </p>
             <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
-              HELLO, I'M <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-emerald-400 text-glow-cyan">
-                {personalInfo.name.toUpperCase()}
-              </span>
+              Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-emerald-400">Venkat.</span>
             </h1>
-            <p className="text-lg sm:text-xl font-mono text-cyan-300 flex items-center space-x-2 pt-1">
-              <span>{personalInfo.roleHeadline}</span>
+            <p className="text-xl sm:text-2xl font-bold text-slate-200">{personalInfo.name}</p>
+            <p className="text-sm sm:text-base font-mono text-cyan-400 font-semibold tracking-wide">
+              {personalInfo.roleHeadline}
             </p>
           </div>
 
-          {/* Dynamic Statement Bio */}
-          <p className="text-slate-400 leading-relaxed max-w-xl text-sm sm:text-base">
-            Computer Science & Engineering student with a high-distinction academic background (
-            <strong className="text-white font-mono">580/600 in PCMB</strong>). I craft high-performance full-stack web applications, REST backend services in Java & Spring Boot, and intelligent digital interfaces.
+          {/* Short Statement */}
+          <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-xl font-normal">
+            "{personalInfo.shortStatement}"
           </p>
 
-          {/* Metric Highlights Pill Group */}
-          <div className="flex flex-wrap gap-3 pt-2">
-            {personalInfo.stats.map((stat, idx) => (
+          {/* Highlight Metrics (Top 3 Only) */}
+          <div className="flex flex-wrap gap-3 pt-1">
+            {personalInfo.highlights.map((item, idx) => (
               <div
                 key={idx}
                 className="cyber-glass px-4 py-2 rounded-xl border border-cyan-500/20 text-xs font-mono"
               >
-                <span className="text-cyan-400 font-bold block">{stat.value}</span>
-                <span className="text-slate-400">{stat.label}</span>
+                <span className="text-cyan-400 font-bold block">{item.value}</span>
+                <span className="text-slate-400 text-[11px]">{item.label}</span>
               </div>
             ))}
           </div>
@@ -55,65 +43,46 @@ export default function Hero({ soundEnabled, setCursorState, hoverSection, setHo
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 pt-4">
             <a
+              href="#projects"
+              onClick={() => playSound('click', soundEnabled)}
+              onMouseEnter={() => setCursorState({ type: 'hover', text: 'PROJECTS' })}
+              onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
+              className="flex items-center space-x-2 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-[0_0_20px_rgba(0,240,255,0.3)] transition cursor-pointer"
+            >
+              <span>VIEW MY WORK</span>
+              <ArrowDown size={16} />
+            </a>
+
+            <a
               href={personalInfo.github}
               target="_blank"
               rel="noreferrer"
               onClick={() => playSound('click', soundEnabled)}
-              onMouseEnter={() => {
-                playSound('hover', soundEnabled);
-                setCursorState({ type: 'hover', text: 'GITHUB' });
-                setHoverSection('projects');
-              }}
-              onMouseLeave={() => {
-                setCursorState({ type: 'default', text: '' });
-                setHoverSection('default');
-              }}
-              className="flex items-center space-x-2.5 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-mono font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-[0_0_20px_rgba(0,240,255,0.4)] transition transform hover:-translate-y-0.5 cursor-pointer"
+              onMouseEnter={() => setCursorState({ type: 'hover', text: 'GITHUB' })}
+              onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
+              className="flex items-center space-x-2 border border-slate-700 bg-slate-900/80 hover:bg-slate-800 text-slate-200 font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl transition cursor-pointer"
             >
               <FaGithub size={18} />
-              <span>GITHUB REPOSITORIES</span>
-              <ArrowUpRight size={16} />
+              <span>GITHUB</span>
+              <ExternalLink size={14} />
             </a>
 
             <a
               href="#contact"
               onClick={() => playSound('click', soundEnabled)}
-              onMouseEnter={() => {
-                playSound('hover', soundEnabled);
-                setCursorState({ type: 'hover', text: 'CONTACT' });
-                setHoverSection('contact');
-              }}
-              onMouseLeave={() => {
-                setCursorState({ type: 'default', text: '' });
-                setHoverSection('default');
-              }}
-              className="flex items-center space-x-2 border border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-slate-200 font-mono text-xs sm:text-sm px-6 py-3.5 rounded-xl transition cursor-pointer"
-            >
-              <Mail size={16} className="text-cyan-400" />
-              <span>TRANSMIT MESSAGE</span>
-            </a>
-
-            <button
-              onClick={() => {
-                playSound('click', soundEnabled);
-                onOpenAI();
-              }}
-              onMouseEnter={() => {
-                playSound('hover', soundEnabled);
-                setCursorState({ type: 'hover', text: 'ASK AI' });
-              }}
+              onMouseEnter={() => setCursorState({ type: 'hover', text: 'CONTACT' })}
               onMouseLeave={() => setCursorState({ type: 'default', text: '' })}
-              className="flex items-center space-x-2 border border-purple-500/40 bg-purple-950/30 text-purple-300 font-mono text-xs sm:text-sm px-5 py-3.5 rounded-xl hover:bg-purple-900/40 transition cursor-pointer"
+              className="flex items-center space-x-2 border border-purple-500/30 bg-purple-950/20 text-purple-300 hover:bg-purple-900/30 font-bold text-xs sm:text-sm px-5 py-3.5 rounded-xl transition cursor-pointer"
             >
-              <Sparkles size={16} className="text-purple-400 animate-spin" />
-              <span>LAUNCH AI ASSISTANT</span>
-            </button>
+              <Mail size={16} />
+              <span>CONTACT ME</span>
+            </a>
           </div>
         </div>
 
-        {/* Right Interactive 2.5D Avatar */}
+        {/* Right Abstract Visual */}
         <div className="lg:col-span-5 flex justify-center items-center">
-          <CyberAvatar hoverState={hoverSection} />
+          <AbstractVisual />
         </div>
       </div>
     </section>
