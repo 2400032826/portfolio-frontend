@@ -46,8 +46,8 @@ export default function Navbar({
         <div
           className={`rounded-full px-6 py-3 flex items-center justify-between border transition-all duration-300 ${
             scrolled
-              ? 'bg-[#0f172a] border-slate-800 shadow-lg text-white'
-              : 'bg-[#0f172a]/95 border-slate-800/80 shadow-md text-white'
+              ? 'bg-[#991b1b] border-red-800 shadow-lg text-white'
+              : 'bg-[#7f1d1d]/95 border-red-800/80 shadow-md text-white'
           }`}
         >
           {/* Logo */}
@@ -57,11 +57,11 @@ export default function Navbar({
             className="flex items-center space-x-1 font-sans text-base font-extrabold tracking-tight text-white group"
           >
             <span>VENKAT</span>
-            <span className="text-[#60a5fa] font-mono">.DEV</span>
+            <span className="text-red-200 font-mono">.DEV</span>
           </a>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center space-x-6 text-xs font-mono font-bold tracking-wider text-slate-200">
+          <nav className="hidden lg:flex items-center space-x-6 text-xs font-mono font-bold tracking-wider text-white">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -69,12 +69,12 @@ export default function Navbar({
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
                   className={`relative py-1 transition-colors duration-200 cursor-pointer ${
-                    isActive ? 'text-[#60a5fa] font-extrabold' : 'text-slate-200 hover:text-[#60a5fa]'
+                    isActive ? 'text-red-200 font-extrabold' : 'text-white hover:text-red-200'
                   }`}
                 >
                   {link.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#60a5fa] rounded-full" />
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-white rounded-full" />
                   )}
                 </button>
               );
@@ -90,8 +90,8 @@ export default function Navbar({
               }}
               className={`p-2 rounded-full border transition flex items-center justify-center cursor-pointer ${
                 soundEnabled
-                  ? 'border-[#60a5fa] bg-blue-950/60 text-[#60a5fa]'
-                  : 'border-slate-700 text-slate-400 hover:text-white'
+                  ? 'border-white bg-red-800 text-white'
+                  : 'border-red-700 text-red-200 hover:text-white'
               }`}
               title={soundEnabled ? 'Disable Sound' : 'Enable Sound'}
             >
@@ -101,7 +101,7 @@ export default function Navbar({
             {/* Mobile Hamburger Trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-slate-200 hover:text-[#60a5fa] transition"
+              className="lg:hidden p-2 text-white hover:text-red-200 transition"
             >
               {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -111,12 +111,12 @@ export default function Navbar({
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-2 mx-6 p-6 bg-[#0f172a] border border-slate-800 shadow-2xl rounded-2xl flex flex-col space-y-3 font-mono text-xs font-bold text-white">
+        <div className="lg:hidden mt-2 mx-6 p-6 bg-[#7f1d1d] border border-red-800 shadow-2xl rounded-2xl flex flex-col space-y-3 font-mono text-xs font-bold text-white">
           {navLinks.map((link) => (
             <button
               key={link.id}
               onClick={() => handleNavClick(link.id)}
-              className="text-left text-slate-200 hover:text-[#60a5fa] transition py-2 border-b border-slate-800"
+              className="text-left text-white hover:text-red-200 transition py-2 border-b border-red-800/60"
             >
               {link.label}
             </button>

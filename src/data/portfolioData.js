@@ -7,9 +7,9 @@ export const personalInfo = {
   currentFocus: "Data Science, AI, and Web Development",
   shortGreeting: "Hi, I'm Venkat.",
   handle: "venkat.dev",
-  title: "Developer • Data • AI • Builder",
-  roleHeadline: "Developer • Data • AI • Builder",
-  shortStatement: "I build full-stack applications, explore data and AI, and turn ideas into useful digital products.",
+  title: "B.Tech CSE Undergraduate • Data Science • AI • Web Development",
+  roleHeadline: "B.Tech CSE Undergraduate • Data Science • AI • Web Development",
+  shortStatement: "I'm a B.Tech Computer Science & Engineering undergraduate specializing in Data Science, with a strong interest in AI and web development. I enjoy building practical applications and turning ideas into useful digital products.",
   pcmbScore: "580/600",
   schoolScore: "527/625",
   location: "Vijayawada, Andhra Pradesh, India",
@@ -67,7 +67,7 @@ export const educationData = [
   {
     period: "Secondary",
     degree: "10th / Secondary School",
-    institution: "Blessed Alphonsa Convent High School",
+    institution: "[PENDING CONFIRMATION]",
     location: "Raichur, Karnataka",
     highlight: "Score: 527 / 625 (84.32%)",
     details: "Foundational secondary education with distinction in Science and Mathematics."
@@ -124,23 +124,6 @@ export const projectsData = [
       "Active full-stack web build for custom studio catalog management.",
       "Responsive React user interface with smooth item preview interactions.",
       "Structured MySQL relational database schema for order processing."
-    ]
-  },
-  {
-    id: "billmitra",
-    title: "Billmitra",
-    status: "COMPLETED",
-    type: "FULL-STACK WEB APPLICATION",
-    tagline: "Digital Invoicing & Fleet Billing Platform for Heavy Machinery Owners",
-    description: "BillMitra is a web application built specifically for heavy machinery owners and fleet operators across India (JCB, Excavator, Tractor owners) to replace manual paperwork with digital invoices.",
-    tech: ["TypeScript", "React", "Node.js", "Tailwind CSS"],
-    github: "https://github.com/2400032826/Billmitra",
-    demo: null,
-    featured: false,
-    highlights: [
-      "Solves manual billing delays for equipment operators across India.",
-      "Instant digital invoice generation with local tax and machinery hour calculations.",
-      "Clean TypeScript architecture ensuring strict type safety."
     ]
   }
 ];
